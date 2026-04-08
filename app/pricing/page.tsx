@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PageWrapper } from "@/components/PageWrapper";
+import PageWrapper from "@/components/PageWrapper";
 
 export const metadata: Metadata = {
   title: "Pricing — MeasureLens",
@@ -174,23 +174,8 @@ export default function PricingPage() {
             <div style={{ textAlign: "center" }}>
               <Link
                 href="/#cta"
-                style={{
-                  display: "inline-block",
-                  padding: "12px 24px",
-                  backgroundColor: "#7C3AED",
-                  color: "#E8EEFF",
-                  textDecoration: "none",
-                  borderRadius: 6,
-                  fontSize: 14,
-                  fontWeight: 600,
-                  transition: "opacity 0.2s",
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.opacity = "0.8")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.opacity = "1")
-                }
+                className="btn-primary link-hover-muted"
+                style={{ display: "inline-flex", padding: "10px 24px", fontSize: "0.875rem" }}
               >
                 Join the waitlist
               </Link>

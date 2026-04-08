@@ -196,10 +196,8 @@ export default async function BlogPostPage({
           {/* Back */}
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-sm mb-8 transition-colors duration-150"
+            className="inline-flex items-center gap-2 text-sm mb-8 link-hover-accent"
             style={{ color: "#6B7CB0", textDecoration: "none" }}
-            onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#A78BFA")}
-            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#6B7CB0")}
           >
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
               <path d="M13 8H3M7 4l-4 4 4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
