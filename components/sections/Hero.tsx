@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 
 const lines = [
-  { label: "Meta ROAS",       value: "4.0×",   status: "DISPUTED",   color: "status-disputed"  },
-  { label: "Google ROAS",     value: "3.5×",   status: "PARTIAL",    color: "status-partial"   },
-  { label: "GA4 ROAS",        value: "2.8×",   status: "UNVERIFIED", color: "status-unverified"},
-  { label: "MMM iROAS",       value: "2.0×",   status: "CONFIRMED",  color: "status-confirmed" },
+  { label: "Meta ROAS",   value: "4.0×", status: "DISPUTED",   color: "status-disputed"   },
+  { label: "Google ROAS", value: "3.5×", status: "PARTIAL",    color: "status-partial"    },
+  { label: "GA4 ROAS",    value: "2.8×", status: "UNVERIFIED", color: "status-unverified" },
+  { label: "MMM iROAS",   value: "2.0×", status: "CONFIRMED",  color: "status-confirmed"  },
 ];
 
 const output = {
@@ -14,12 +14,11 @@ const output = {
   value:      "2.4×",
   confidence: "78 / 100",
   band:       "MODERATE",
-  action:     "Reduce Meta spend by 20% · Google under-attributed → run holdout",
+  action:     "Reduce Meta spend 20% · Google under-attributed · run holdout",
 };
 
 export default function Hero() {
   const [phase, setPhase] = useState(0);
-  // 0 = idle, 1 = scanning, 2 = reconciling, 3 = done
 
   useEffect(() => {
     const t1 = setTimeout(() => setPhase(1), 800);
@@ -49,31 +48,30 @@ export default function Hero() {
           {/* Left: copy */}
           <div>
             <div className="section-tag animate-fade-in">
-              <span>Marketing Intelligence</span>
+              <span>Marketing Measurement</span>
             </div>
 
             <h1
               className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] mb-6"
-              style={{ animationDelay: "0.1s" }}
             >
               <span className="block text-white animate-fade-up" style={{ animationDelay: "0.15s" }}>
-                Your ad platforms
+                Four platforms.
               </span>
               <span className="block animate-fade-up" style={{ animationDelay: "0.25s" }}>
-                <span className="gradient-text">can't agree.</span>
+                <span className="gradient-text">Four answers.</span>
               </span>
               <span className="block text-white animate-fade-up" style={{ animationDelay: "0.35s" }}>
-                We find what's true.
+                One is real.
               </span>
             </h1>
 
             <p
-              className="text-lg text-lens-muted leading-relaxed mb-8 max-w-lg animate-fade-up"
-              style={{ animationDelay: "0.45s" }}
+              className="text-lg leading-relaxed mb-8 max-w-lg animate-fade-up"
+              style={{ color: "#8892B4", animationDelay: "0.45s" }}
             >
-              MeasureLens reconciles conflicting attribution data across Meta, Google, GA4,
-              and your models — producing a single confidence-scored truth with a clear
-              decision baked in.
+              Every ad platform reports a different ROAS. None of them agree.
+              Most marketing teams pick the number that sounds right and move on.
+              We are building something that tells you which one to actually trust.
             </p>
 
             <div
@@ -87,21 +85,20 @@ export default function Hero() {
                 </svg>
               </a>
               <a href="#how-it-works" className="btn-ghost">
-                See how it works
+                See our approach
               </a>
             </div>
 
             <p
               className="text-sm animate-fade-up"
-              style={{ color: "rgba(107,124,176,0.7)", animationDelay: "0.65s" }}
+              style={{ color: "rgba(107,124,176,0.6)", animationDelay: "0.65s" }}
             >
-              Built for teams spending{" "}
-              <span style={{ color: "#A78BFA" }}>$10K–$500K/month</span> on ads.
-              No data science team required.
+              Built for performance marketers and growth leaders who are tired of
+              guessing which number to believe.
             </p>
           </div>
 
-          {/* Right: terminal output */}
+          {/* Right: terminal illustration */}
           <div
             className="terminal p-5 lg:p-6 animate-fade-up"
             style={{ animationDelay: "0.4s" }}
@@ -126,7 +123,7 @@ export default function Hero() {
               <p className="text-xs font-mono mb-3" style={{ color: "#6B7CB0" }}>
                 $ lensos reconcile --client acme-co --period 2024-Q4
               </p>
-              {lines.map((l, i) => (
+              {lines.map((l) => (
                 <div key={l.label} className="flex items-center justify-between py-1.5 px-3 rounded" style={{ background: "rgba(255,255,255,0.02)" }}>
                   <span className="text-sm font-mono" style={{ color: "#8892B4", minWidth: 130 }}>
                     {l.label}

@@ -6,9 +6,9 @@ const steps = [
   {
     step: "01",
     title: "Ingest",
-    subtitle: "Connect every signal",
+    subtitle: "Bring every signal together",
     body:
-      "Upload CSVs, connect Meta/Google/GA4 exports, feed MMM outputs and experiment results. LensOS normalizes every source into a canonical taxonomy regardless of naming conventions.",
+      "The starting point is unifying data that was never designed to talk to each other. Platform exports, model outputs, and experiment results all use different naming conventions, different time windows, and different definitions of a conversion. The first step is getting them into a common language so they can actually be compared.",
     detail: "Meta · Google Ads · GA4 · MMM outputs · MTA feeds · Experiment results",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -19,10 +19,10 @@ const steps = [
   {
     step: "02",
     title: "Evaluate",
-    subtitle: "Score the evidence",
+    subtitle: "Score each source by evidence quality",
     body:
-      "Every data source receives an evidence tier (T1–T4) based on methodology and a staleness penalty based on recency. A geo holdout experiment beats a platform click attribution model every time — LensOS knows the difference.",
-    detail: "Evidence Tier · Staleness Score · Coverage % · Methodology Assessment",
+      "Not all data is created equal. A geo holdout experiment earns a higher evidence tier than a platform's last-click attribution model. A recent MMM with strong geographic coverage carries more weight than one built six months ago. LensOS scores every source on methodology, recency, and coverage before any reconciliation happens.",
+    detail: "Evidence Tier · Staleness Penalty · Coverage Assessment · Methodology Classification",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
@@ -32,9 +32,9 @@ const steps = [
   {
     step: "03",
     title: "Reconcile",
-    subtitle: "Resolve conflicts explicitly",
+    subtitle: "Make conflicts explicit",
     body:
-      "Where sources disagree, LensOS surfaces the delta, assigns a CONFIRMED / DISPUTED / PARTIAL / UNVERIFIED flag, and explains the likely cause. No silent averaging. No false precision.",
+      "Where sources disagree, LensOS surfaces the delta rather than averaging it away. Each disagreement is flagged as CONFIRMED, DISPUTED, PARTIAL, or UNVERIFIED, and the likely cause is documented. This is the step most measurement tools skip. It is also the most important one.",
     detail: "Delta Computation · Flag Assignment · Conflict Explanation · Consensus iROAS",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -46,9 +46,9 @@ const steps = [
   {
     step: "04",
     title: "Synthesize",
-    subtitle: "Generate the truth layer",
+    subtitle: "Produce a confidence-weighted truth",
     body:
-      "LensOS computes a Measurement Confidence Score (0–100) combining evidence tier weight, source agreement, recency, and coverage. The number it gives you reflects both how right it is and how sure it is.",
+      "LensOS computes a Measurement Confidence Score between 0 and 100 that combines evidence tier weights, source agreement, recency, and coverage. The number it produces reflects both what the answer is and how certain we are about it. A narrow confidence band is earned, not assumed.",
     detail: "MCS Score · Confidence Band · Source Agreement Map · Uncertainty Range",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -59,10 +59,10 @@ const steps = [
   {
     step: "05",
     title: "Recommend",
-    subtitle: "Decision-ready output",
+    subtitle: "A decision, not a report",
     body:
-      "Not a chart. A recommendation. Scale, cut, or run a test first — every output includes the action, the confidence behind it, and what evidence would change the answer. Built for a CMO to act on in a meeting.",
-    detail: "Action · Confidence Level · Evidence Gap · Experiment Design Brief",
+      "The output is not a chart. It is a recommendation. Scale this channel, cut that one, or run a holdout test before committing. Every recommendation includes the confidence level behind it and what evidence would change the answer. Designed to be acted on in a meeting, not interpreted afterward.",
+    detail: "Recommended Action · Confidence Level · Evidence Gap · Experiment Design Brief",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
@@ -76,7 +76,7 @@ export default function LensOS() {
   const ref = useScrollReveal();
 
   return (
-    <section ref={ref as any} className="py-24 lg:py-32" style={{ background: "#0C0C1E" }}>
+    <section id="lensos" ref={ref as any} className="py-24 lg:py-32" style={{ background: "#0C0C1E" }}>
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
         {/* Header */}
@@ -89,9 +89,10 @@ export default function LensOS() {
               <span className="gradient-text">A reasoning engine.</span>
             </h2>
             <p className="text-lg" style={{ color: "#6B7CB0" }}>
-              LensOS is the agentic AI core of MeasureLens. It doesn't show you data —
-              it actively weighs evidence, flags conflicts, and produces decisions.
-              The difference is everything.
+              LensOS is the core intelligence layer of MeasureLens. It does not display
+              your data. It evaluates it. It weighs competing sources of evidence,
+              flags what is in conflict, and produces an answer you can act on.
+              That distinction is the whole point.
             </p>
           </div>
           <div className="reveal-on-scroll reveal-delay-2">
@@ -100,14 +101,20 @@ export default function LensOS() {
               style={{ background: "rgba(124,58,237,0.06)", border: "1px solid rgba(124,58,237,0.15)" }}
             >
               <p className="text-xs font-mono font-semibold mb-3" style={{ color: "#7C3AED", letterSpacing: "0.08em" }}>
-                LENSOS SYSTEM STATUS
+                LENSOS SYSTEM DESIGN
               </p>
               <div className="space-y-2">
-                {["Signal ingestion", "Evidence scoring", "Conflict resolution", "Confidence computation"].map((item) => (
+                {[
+                  "Signal normalization",
+                  "Evidence tier scoring",
+                  "Conflict resolution logic",
+                  "Confidence computation",
+                  "Decision synthesis",
+                ].map((item) => (
                   <div key={item} className="flex items-center gap-3">
                     <span className="status-confirmed text-xs">●</span>
                     <span className="text-sm font-mono" style={{ color: "#8892B4" }}>{item}</span>
-                    <span className="ml-auto text-xs font-mono status-confirmed">ACTIVE</span>
+                    <span className="ml-auto text-xs font-mono" style={{ color: "rgba(124,58,237,0.5)" }}>IN DEVELOPMENT</span>
                   </div>
                 ))}
               </div>
@@ -115,7 +122,7 @@ export default function LensOS() {
           </div>
         </div>
 
-        {/* Steps — interactive */}
+        {/* Steps — interactive tabs */}
         <div className="grid lg:grid-cols-5 gap-4 mb-4 reveal-on-scroll reveal-delay-3">
           {steps.map((s, i) => (
             <button
@@ -164,7 +171,7 @@ export default function LensOS() {
             </div>
             <div>
               <p className="text-xs font-mono font-semibold mb-3" style={{ color: "#6B7CB0", letterSpacing: "0.1em" }}>
-                OUTPUTS
+                COMPONENTS
               </p>
               <div className="flex flex-wrap gap-2">
                 {steps[active].detail.split(" · ").map((d) => (

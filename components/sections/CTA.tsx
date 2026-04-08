@@ -41,7 +41,7 @@ export default function CTA() {
           background: "radial-gradient(ellipse, rgba(124,58,237,0.12) 0%, transparent 65%)",
         }}
       />
-      {/* Grid */}
+      {/* Subtle grid */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -71,23 +71,25 @@ export default function CTA() {
           className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.05] reveal-on-scroll reveal-delay-1"
           style={{ color: "#E8EEFF" }}
         >
-          Stop guessing.
+          This problem is
           <br />
-          <span className="gradient-text">Start knowing.</span>
+          <span className="gradient-text">worth solving.</span>
         </h2>
 
         <p
           className="text-xl mb-4 reveal-on-scroll reveal-delay-2"
-          style={{ color: "#6B7CB0" }}
+          style={{ color: "#8892B4" }}
         >
-          Get your real ROAS in under an hour.
+          We are building MeasureLens for marketing leaders who are tired of
+          staring at conflicting numbers and not knowing which one to trust.
         </p>
         <p
-          className="text-base mb-12 reveal-on-scroll reveal-delay-2"
+          className="text-base mb-12 leading-relaxed reveal-on-scroll reveal-delay-2"
           style={{ color: "rgba(107,124,176,0.6)" }}
         >
-          No data science team. No six-week engagement. Just upload your exports
-          and LensOS does the rest.
+          The product is in active development. We are looking for early conversations
+          with performance marketers, heads of growth, and marketing executives who
+          feel this problem firsthand and want to shape what we build.
         </p>
 
         {/* CTA form */}
@@ -112,7 +114,7 @@ export default function CTA() {
               onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)")}
             />
             <button type="submit" className="btn-primary">
-              Request Access
+              Join the Waitlist
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
@@ -127,33 +129,32 @@ export default function CTA() {
               <path d="M20 6L9 17l-5-5"/>
             </svg>
             <p className="text-sm font-medium" style={{ color: "#34D399" }}>
-              You're on the list. We'll be in touch shortly.
+              You are on the list. We will reach out directly.
             </p>
           </div>
         )}
 
         <p
           className="text-xs mb-16 reveal-on-scroll reveal-delay-3"
-          style={{ color: "rgba(107,124,176,0.5)" }}
+          style={{ color: "rgba(107,124,176,0.4)" }}
         >
-          No credit card required · Built for teams spending $10K–$500K/month · Early access cohort filling now
+          No sales pitch. No demo environment. Just an honest conversation about the problem.
         </p>
 
-        {/* Secondary CTAs */}
-        <div
-          className="flex flex-col sm:flex-row gap-4 justify-center reveal-on-scroll reveal-delay-4"
-        >
+        {/* Secondary CTA */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center reveal-on-scroll reveal-delay-4">
           <a href="#how-it-works" className="btn-ghost">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <polygon points="5 3 19 12 5 21 5 3"/>
+              <path d="M12 22V8M5 15l7 7 7-7"/>
             </svg>
-            See how it works
+            See our approach
           </a>
-          <a href="#" className="btn-ghost">
+          <a href="#lensos" className="btn-ghost">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4"/>
             </svg>
-            Upload your data
+            How LensOS works
           </a>
         </div>
 
@@ -164,17 +165,17 @@ export default function CTA() {
         >
           <p
             className="text-xs uppercase tracking-widest mb-6 font-semibold"
-            style={{ color: "rgba(107,124,176,0.4)" }}
+            style={{ color: "rgba(107,124,176,0.35)" }}
           >
-            Built on the same data your team already exports
+            Designed to work with the data your team already has
           </p>
           <div className="flex flex-wrap items-center justify-center gap-8">
-            {["Meta Ads", "Google Ads", "GA4", "MMM Output", "MTA Feeds", "Experiments"].map((t) => (
+            {["Meta Ads", "Google Ads", "GA4", "MMM Output", "MTA Feeds", "Incrementality Experiments"].map((t) => (
               <span
                 key={t}
                 className="text-sm font-semibold px-4 py-2 rounded-lg"
                 style={{
-                  color: "rgba(184,192,224,0.5)",
+                  color: "rgba(184,192,224,0.4)",
                   background: "rgba(255,255,255,0.02)",
                   border: "1px solid rgba(255,255,255,0.04)",
                 }}

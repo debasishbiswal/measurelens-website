@@ -1,25 +1,25 @@
 "use client";
 import { useScrollReveal } from "../ui/useScrollReveal";
 
-const steps = [
+const principles = [
   {
     n: "1",
-    title: "Connect your data",
-    time: "~10 min",
-    body: "Upload CSVs from Meta, Google, and GA4. Drop in your MMM output or MTA export. If you ran an incrementality experiment, upload that too. No data pipeline required.",
-    chips: ["Meta Ads CSV", "Google Ads CSV", "GA4 Export", "MMM Output", "Experiment Results"],
+    title: "Not all evidence is equal",
+    category: "Foundation",
+    body: "A geo holdout experiment is more reliable than a platform click model. A well-structured MMM is more trustworthy than GA4 last-click attribution. Getting to a real answer starts with acknowledging that some data deserves more weight than others. Most tools treat every source the same. We do not.",
+    chips: ["Evidence Tiers", "Methodology Assessment", "Source Weighting", "Causal vs Correlational"],
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
       </svg>
     ),
   },
   {
     n: "2",
-    title: "LensOS reconciles everything",
-    time: "~2 min",
-    body: "LensOS scores each source by evidence quality, detects attribution overlap, flags disagreements, and computes a weighted truth layer. No configuration needed — it knows what to trust.",
-    chips: ["Evidence Scoring", "Overlap Detection", "Conflict Flagging", "Consensus iROAS"],
+    title: "Conflicts need to be surfaced, not averaged",
+    category: "Principle",
+    body: "When Meta reports 4.0× ROAS and your MMM reports 2.0×, averaging them gives you 3.0×. That is not a reconciliation. That is hiding the problem. The real work is understanding why those two sources disagree and which one has the stronger methodological foundation.",
+    chips: ["Conflict Detection", "Delta Analysis", "Source Agreement Map", "Dispute Flags"],
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <circle cx="12" cy="12" r="3"/>
@@ -29,10 +29,10 @@ const steps = [
   },
   {
     n: "3",
-    title: "Get your real numbers",
-    time: "Immediate",
-    body: "You see your true iROAS per channel, a Measurement Confidence Score for each one, and a clear breakdown of where sources agree and where they diverge.",
-    chips: ["True iROAS", "MCS 0–100", "Source Agreement Map", "Confidence Band"],
+    title: "Confidence matters as much as the number",
+    category: "Approach",
+    body: "A ROAS figure without a confidence range is precision theater. We are building a Measurement Confidence Score that tells you not just what the answer is, but how certain you should be about it. A confident 2.4× is far more useful than an uncertain 4.0×.",
+    chips: ["Measurement Confidence Score", "Confidence Bands", "Uncertainty Range", "Recency Weighting"],
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
@@ -41,10 +41,10 @@ const steps = [
   },
   {
     n: "4",
-    title: "Take the recommended action",
-    time: "Your call",
-    body: "LensOS tells you exactly what to do: scale this channel, cut that one, or run a holdout test before deciding. Each recommendation includes the confidence level and what evidence would change it.",
-    chips: ["Scale / Cut / Test", "Experiment Brief", "Budget Scenarios", "Decision Rationale"],
+    title: "The goal is a decision, not a chart",
+    category: "Vision",
+    body: "Marketing leaders do not need more dashboards. They need to know what to do next. Should you scale this channel? Cut that one? Run a holdout before committing? That is what we are building toward. Measurement that ends with a clear recommendation, not another tab to interpret.",
+    chips: ["Recommended Actions", "Scale / Cut / Test", "Experiment Design", "Decision Rationale"],
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
@@ -63,19 +63,20 @@ export default function HowItWorks() {
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-20 reveal-on-scroll">
           <div className="section-tag justify-center" style={{ color: "#7C3AED" }}>
-            <span>Process</span>
+            <span>Our Approach</span>
           </div>
           <h2 className="text-4xl lg:text-5xl font-bold tracking-tight mb-5" style={{ color: "#0F0F2A" }}>
-            From conflicting data to clear decision
-            <span style={{ background: "linear-gradient(135deg,#7C3AED,#4F46E5)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}> in under an hour.</span>
+            How we think about
+            <span style={{ background: "linear-gradient(135deg,#7C3AED,#4F46E5)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}> the problem</span>
           </h2>
           <p className="text-lg" style={{ color: "#6B7280" }}>
-            No data science team. No six-week MMM engagement. No waiting for a consultant.
-            Upload your exports, and LensOS does the rest.
+            Most attribution tools add more data to an already confusing picture.
+            We are building something different. Something that evaluates the quality
+            of the data you already have, and tells you which parts of it to trust.
           </p>
         </div>
 
-        {/* Steps */}
+        {/* Principles */}
         <div className="relative">
           {/* Vertical connector line (desktop) */}
           <div
@@ -84,12 +85,12 @@ export default function HowItWorks() {
           />
 
           <div className="space-y-6">
-            {steps.map((step, i) => (
+            {principles.map((p, i) => (
               <div
-                key={step.n}
+                key={p.n}
                 className={`relative flex flex-col lg:flex-row gap-6 lg:gap-10 reveal-on-scroll reveal-delay-${i + 1}`}
               >
-                {/* Step number bubble */}
+                {/* Number bubble */}
                 <div className="flex-shrink-0 flex items-start">
                   <div
                     className="w-[78px] h-[78px] rounded-2xl flex items-center justify-center flex-col gap-1 z-10"
@@ -98,9 +99,9 @@ export default function HowItWorks() {
                       border: "1px solid rgba(124,58,237,0.2)",
                     }}
                   >
-                    <div style={{ color: "#7C3AED" }}>{step.icon}</div>
+                    <div style={{ color: "#7C3AED" }}>{p.icon}</div>
                     <span className="text-xs font-mono font-bold" style={{ color: "rgba(124,58,237,0.6)" }}>
-                      0{step.n}
+                      0{p.n}
                     </span>
                   </div>
                 </div>
@@ -116,7 +117,7 @@ export default function HowItWorks() {
                 >
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
                     <h3 className="text-lg font-bold" style={{ color: "#0F0F2A" }}>
-                      {step.title}
+                      {p.title}
                     </h3>
                     <span
                       className="text-xs font-mono px-3 py-1 rounded-full flex-shrink-0 self-start"
@@ -126,14 +127,14 @@ export default function HowItWorks() {
                         border: "1px solid rgba(124,58,237,0.15)",
                       }}
                     >
-                      {step.time}
+                      {p.category}
                     </span>
                   </div>
                   <p className="mb-5 leading-relaxed" style={{ color: "#6B7280", fontSize: "0.95rem" }}>
-                    {step.body}
+                    {p.body}
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    {step.chips.map((c) => (
+                    {p.chips.map((c) => (
                       <span
                         key={c}
                         className="text-xs px-3 py-1 rounded-lg font-medium"

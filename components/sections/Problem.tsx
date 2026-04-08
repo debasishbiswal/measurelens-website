@@ -10,16 +10,16 @@ const sources = [
 
 const pains = [
   {
-    title: "You pick the number that feels right",
-    body: "Most teams default to the platform number that supports the budget they wanted anyway. That's not measurement — it's confirmation bias with a spreadsheet.",
+    title: "You default to the number that confirms what you already believed",
+    body: "Most teams do not average the data. They pick the platform that supports the decision they wanted to make anyway. That is not measurement. It is confirmation bias running on a media budget.",
   },
   {
-    title: "Budget decisions made on bad data",
-    body: "If your true ROAS is 2.0× and you think it's 4.0×, you're doubling the budget on channels that don't deserve it. Every wrong number compounds.",
+    title: "Every wrong assumption compounds at scale",
+    body: "If your true ROAS is 2.0× but you believe it is 4.0×, you are doubling down on channels that do not deserve it. At $20K per month, the error is uncomfortable. At $200K per month, it is a serious problem. It rarely gets caught until the damage is done.",
   },
   {
-    title: "The gap grows as you scale",
-    body: "At $20K/month, being 40% wrong costs you $8K. At $200K/month, the same error is $80K. The platforms' incentives to mislead you grow with your spend.",
+    title: "No one has a clear answer yet",
+    body: "MMM takes six weeks and a consultant. Incrementality tests require traffic volume and patience. Most teams cycle back to the same place: staring at platform dashboards and hoping they are not being misled. We think there is a better path.",
   },
 ];
 
@@ -29,6 +29,7 @@ export default function Problem() {
   return (
     <section
       ref={ref as any}
+      id="problem"
       className="py-24 lg:py-32 section-light"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -38,14 +39,15 @@ export default function Problem() {
           <div className="reveal-on-scroll">
             <div className="section-tag" style={{ color: "#7C3AED" }}>The Attribution Problem</div>
             <h2 className="text-4xl lg:text-5xl font-bold tracking-tight mb-6" style={{ color: "#0F0F2A" }}>
-              Four platforms.{" "}
+              Same campaign.{" "}
               <span style={{ background: "linear-gradient(135deg,#7C3AED,#4F46E5)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                 Four answers.
               </span>
             </h2>
             <p className="text-lg mb-10" style={{ color: "#6B7280" }}>
-              You run the same campaign. Every platform gives you a different number.
-              Which one is real? Most teams average them and hope for the best.
+              You run one campaign. Every platform gives you a different number.
+              The delta is not noise. It is a structural problem with how
+              each platform measures success for itself.
             </p>
 
             {/* Source cards */}
@@ -85,8 +87,9 @@ export default function Problem() {
               style={{ background: "rgba(124,58,237,0.06)", border: "1px dashed rgba(124,58,237,0.25)" }}
             >
               <p className="text-sm font-medium" style={{ color: "#7C3AED" }}>
-                ⚠ Three of these numbers are wrong. One is grounded in causal evidence.
-                MeasureLens tells you which is which — and by how much.
+                Three of these numbers are overstating performance. One is grounded
+                in causal evidence. The problem is not having the data. It is knowing
+                which data to trust.
               </p>
             </div>
           </div>
@@ -127,8 +130,8 @@ export default function Problem() {
             >
               <p className="text-4xl font-bold mb-1" style={{ color: "#7C3AED" }}>62%</p>
               <p className="text-sm" style={{ color: "#6B7280" }}>
-                of performance teams report making budget decisions they later discovered were
-                based on overreported attribution data.
+                of performance teams report making budget decisions they later discovered
+                were based on significantly overreported attribution data.
               </p>
             </div>
           </div>
