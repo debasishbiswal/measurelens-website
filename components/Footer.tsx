@@ -22,15 +22,20 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-2.5 mb-4">
-              <div
-                className="w-7 h-7 rounded-lg flex items-center justify-center"
-                style={{ background: "linear-gradient(135deg,#7C3AED,#4F46E5)" }}
-              >
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M7 1L13 4.5V9.5L7 13L1 9.5V4.5L7 1Z" stroke="white" strokeWidth="1.5" fill="none"/>
-                  <circle cx="7" cy="7" r="2" fill="white"/>
-                </svg>
-              </div>
+              <svg width="32" height="32" viewBox="0 0 260 260" fill="none" aria-hidden="true" className="flex-shrink-0">
+                <rect x="18" y="18" width="224" height="224" rx="34" ry="34"
+                  fill="rgba(124,58,237,0.08)" stroke="#7C3AED" strokeWidth="8"/>
+                <path stroke="#E8EEFF" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" fill="none"
+                  d="M 72 170 L 72 88 L 118 120 L 146 102"/>
+                <path stroke="#E8EEFF" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" fill="none"
+                  d="M 146 102 L 146 174 L 188 206"/>
+                <path stroke="#7C3AED" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" fill="none"
+                  d="M 193 82 L 193 168 L 219 194"/>
+                <line stroke="#A78BFA" strokeWidth="9" strokeLinecap="round"
+                  x1="58" y1="178" x2="103" y2="154"/>
+                <circle fill="#A78BFA" cx="54" cy="180" r="15"/>
+                <circle fill="#A78BFA" cx="108" cy="151" r="15"/>
+              </svg>
               <span className="font-bold text-base tracking-tight" style={{ color: "#E8EEFF" }}>
                 Measure<span style={{ color: "#A78BFA" }}>Lens</span>
               </span>
