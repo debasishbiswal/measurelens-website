@@ -101,26 +101,20 @@ The agent:
 
 ---
 
-## Automated Publishing (Future)
+## Daily Publishing Workflow (Claude Scheduled Task)
 
-The content system is designed to support automated daily publishing via:
+Post generation runs as a human-in-the-loop workflow using Claude Scheduled Tasks.
+No separate API billing. No automated commits. You review before anything goes live.
 
-**Option A — GitHub Actions**
-Create `.github/workflows/daily-blog.yml`:
-- Schedule: `cron: '0 12 * * *'` (7:00 AM EST = 12:00 UTC)
-- Action: Run a script that generates a new post using the agent prompt and commits it
+**The daily task prompt lives in `SCHEDULED_TASK.md`.**
 
-**Option B — External Scheduler (Make / Zapier)**
-- Trigger: Daily at 7:00 AM EST
-- Action: Call OpenAI or Anthropic API with AGENT_PROMPT.md + next topic from CONTENT_CALENDAR.md
-- Output: Commit new `.ts` file to GitHub via API
-- Deploy: Vercel auto-deploys on push
+How it works:
+1. The scheduled task fires each morning at 8:00 AM EDT
+2. Claude reads the content calendar, finds the next unpublished topic, and drafts the full post
+3. You review the draft in the conversation
+4. If it looks good, you save the file and push — Vercel deploys automatically
 
-**Option C — Cursor / Claude Code with cron**
-- Schedule the blog writer to run in a Cursor background agent
-- Agent generates the post file and uses git commit + push
-
-The content directory structure is intentionally stable so any of these automation options can plug in without code changes.
+See `SCHEDULED_TASK.md` for the full prompt and setup instructions.
 
 ---
 

@@ -139,15 +139,10 @@
 
 ## How to Queue and Publish
 
-1. Pick the next post from this calendar
-2. Use the AGENT_PROMPT.md template with the title, angle, and summary filled in
-3. Generate the post TypeScript file
-4. Review against the quality checklist in AGENT_PROMPT.md
-5. Save to `/content/blog/posts/<slug>.ts`
-6. Register in `/content/blog/index.ts`
+1. Run the daily scheduled task (see `SCHEDULED_TASK.md`) or open Claude and paste the task prompt manually
+2. Claude reads this calendar, finds the next unpublished entry, and drafts the full post
+3. Review the draft in the Claude conversation
+4. Save the generated file to `/content/blog/posts/<slug>.ts`
+5. Register it in `/content/blog/index.ts` (add to the top of the posts array)
+6. Mark the entry **Status: PUBLISHED** in this file
 7. Commit and push — Vercel deploys automatically
-
-For automated daily publishing, this workflow can be triggered via:
-- GitHub Actions (cron schedule at 7:00 AM EST)
-- External scheduler (Zapier, Make, etc.) calling a GitHub API commit
-- Manual run from Cursor or any LLM-enabled editor
