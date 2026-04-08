@@ -20,6 +20,7 @@ export default function Footer() {
     Resources: [
       { label: "Docs",          href: "/docs" },
       { label: "Early Access",  href: "/#cta" },
+      { label: "Try LensOS ↗",  href: "https://app.measurelens.com" },
     ],
     Legal: [
       { label: "Privacy",       href: "/privacy" },
@@ -82,19 +83,36 @@ export default function Footer() {
                 {group}
               </p>
               <ul className="space-y-2.5">
-                {items.map((item) => (
-                  <li key={item.label}>
-                    <Link
-                      href={item.href}
-                      className="text-sm transition-colors duration-150"
-                      style={{ color: "#6B7CB0", textDecoration: "none" }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = "#C4CAEE")}
-                      onMouseLeave={(e) => (e.currentTarget.style.color = "#6B7CB0")}
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
+                {items.map((item) => {
+                  const isExternal = item.href.startsWith("http");
+                  return (
+                    <li key={item.label}>
+                      {isExternal ? (
+                        <a
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm transition-colors duration-150"
+                          style={{ color: "#6B7CB0", textDecoration: "none" }}
+                          onMouseEnter={(e) => (e.currentTarget.style.color = "#A78BFA")}
+                          onMouseLeave={(e) => (e.currentTarget.style.color = "#6B7CB0")}
+                        >
+                          {item.label}
+                        </a>
+                      ) : (
+                        <Link
+                          href={item.href}
+                          className="text-sm transition-colors duration-150"
+                          style={{ color: "#6B7CB0", textDecoration: "none" }}
+                          onMouseEnter={(e) => (e.currentTarget.style.color = "#C4CAEE")}
+                          onMouseLeave={(e) => (e.currentTarget.style.color = "#6B7CB0")}
+                        >
+                          {item.label}
+                        </Link>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}
@@ -109,20 +127,24 @@ export default function Footer() {
             {year} MeasureLens, Inc. All rights reserved.
           </p>
 
-          {/* LensOS badge */}
-          <Link
-            href="/lensos"
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors duration-150"
+          {/* LensOS app badge */}
+          <a
+            href="https://app.measurelens.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-all duration-150"
             style={{
               background: "rgba(124,58,237,0.07)",
               border: "1px solid rgba(124,58,237,0.15)",
               textDecoration: "none",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "rgba(124,58,237,0.12)";
+              (e.currentTarget as HTMLElement).style.background = "rgba(124,58,237,0.15)";
+              (e.currentTarget as HTMLElement).style.borderColor = "rgba(124,58,237,0.35)";
             }}
             onMouseLeave={(e) => {
               (e.currentTarget as HTMLElement).style.background = "rgba(124,58,237,0.07)";
+              (e.currentTarget as HTMLElement).style.borderColor = "rgba(124,58,237,0.15)";
             }}
           >
             <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
@@ -130,9 +152,9 @@ export default function Footer() {
               <circle cx="7" cy="7" r="2" fill="#A78BFA"/>
             </svg>
             <span className="text-xs font-mono font-medium" style={{ color: "#A78BFA" }}>
-              Powered by LensOS
+              Try LensOS →
             </span>
-          </Link>
+          </a>
 
           {/* Socials */}
           <div className="flex items-center gap-4">

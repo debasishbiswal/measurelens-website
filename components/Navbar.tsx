@@ -83,9 +83,39 @@ export default function Navbar() {
             >
               Contact
             </Link>
-            <Link href="/#cta" className="btn-primary" style={{ padding: "9px 18px", fontSize: "0.85rem" }}>
+            <Link
+              href="/#cta"
+              className="text-sm font-medium transition-colors duration-150"
+              style={{
+                color: "#8892B4",
+                textDecoration: "none",
+                padding: "9px 14px",
+                borderRadius: "8px",
+                border: "1px solid rgba(255,255,255,0.08)",
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLElement).style.color = "#E8EEFF";
+                (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.14)";
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLElement).style.color = "#8892B4";
+                (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.08)";
+              }}
+            >
               Request Access
             </Link>
+            <a
+              href="https://app.measurelens.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+              style={{ padding: "9px 18px", fontSize: "0.85rem", display: "inline-flex", alignItems: "center", gap: 6 }}
+            >
+              Try LensOS
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </a>
           </div>
 
           {/* Mobile menu toggle */}
@@ -132,8 +162,26 @@ export default function Navbar() {
             >
               Contact
             </Link>
-            <div className="pt-3 px-3">
-              <Link href="/#cta" className="btn-primary w-full justify-center" onClick={() => setMenuOpen(false)}>
+            <div className="pt-3 px-3 flex flex-col gap-2">
+              <a
+                href="https://app.measurelens.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary w-full justify-center"
+                onClick={() => setMenuOpen(false)}
+                style={{ display: "flex", alignItems: "center", gap: 6 }}
+              >
+                Try LensOS
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </a>
+              <Link
+                href="/#cta"
+                className="w-full text-center text-sm font-medium py-2 rounded-lg"
+                style={{ color: "#8892B4", textDecoration: "none", border: "1px solid rgba(255,255,255,0.08)" }}
+                onClick={() => setMenuOpen(false)}
+              >
                 Request Access
               </Link>
             </div>

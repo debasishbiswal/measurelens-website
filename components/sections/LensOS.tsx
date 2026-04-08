@@ -150,6 +150,31 @@ export default function LensOS() {
           ))}
         </div>
 
+        {/* CTA banner */}
+        <div
+          className="rounded-2xl p-6 lg:p-8 mb-4 reveal-on-scroll reveal-delay-4 flex flex-col sm:flex-row items-center justify-between gap-4"
+          style={{ background: "rgba(124,58,237,0.08)", border: "1px solid rgba(124,58,237,0.2)" }}
+        >
+          <div>
+            <p className="text-base font-semibold text-white mb-1">See LensOS reconcile your data</p>
+            <p className="text-sm" style={{ color: "#6B7CB0" }}>
+              Load the demo dataset and walk through all 4 screens — no setup, no API key required.
+            </p>
+          </div>
+          <a
+            href="https://app.measurelens.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary flex-shrink-0"
+            style={{ whiteSpace: "nowrap" }}
+          >
+            See LensOS in Action
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
         {/* Active step detail */}
         <div
           className="rounded-2xl p-8 lg:p-10 reveal-on-scroll reveal-delay-4"

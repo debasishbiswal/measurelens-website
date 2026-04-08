@@ -78,14 +78,19 @@ export default function Hero() {
               className="flex flex-col sm:flex-row gap-3 mb-10 animate-fade-up"
               style={{ animationDelay: "0.55s" }}
             >
-              <a href="#cta" className="btn-primary">
-                Request Early Access
+              <a
+                href="https://app.measurelens.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary"
+              >
+                Launch LensOS
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </a>
-              <a href="#how-it-works" className="btn-ghost">
-                See our approach
+              <a href="mailto:hello@measurelens.com" className="btn-ghost">
+                Book a Demo
               </a>
             </div>
 
