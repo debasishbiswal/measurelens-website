@@ -1,17 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 const navLinks = [
-  { label: "Why MeasureLens", href: "#problem" },
-  { label: "How It Works",    href: "#how-it-works" },
-  { label: "LensOS",          href: "#lensos" },
-  { label: "Pricing",         href: "#cta" },
+  { label: "About",      href: "/about" },
+  { label: "LensOS",     href: "/lensos" },
+  { label: "Blog",       href: "/blog" },
+  { label: "Insights",   href: "/insights" },
 ];
 
 export default function Navbar() {
-  const [scrolled,     setScrolled]     = useState(false);
-  const [menuOpen,     setMenuOpen]     = useState(false);
+  const [scrolled,  setScrolled]  = useState(false);
+  const [menuOpen,  setMenuOpen]  = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -23,9 +24,7 @@ export default function Navbar() {
     <header
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{
-        background: scrolled
-          ? "rgba(6,6,15,0.88)"
-          : "transparent",
+        background: scrolled ? "rgba(6,6,15,0.90)" : "transparent",
         backdropFilter: scrolled ? "blur(16px)" : "none",
         WebkitBackdropFilter: scrolled ? "blur(16px)" : "none",
         borderBottom: scrolled
@@ -37,8 +36,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2.5 group">
-            {/* Icon mark */}
+          <Link href="/" className="flex items-center gap-2.5 group" style={{ textDecoration: "none" }}>
             <svg width="32" height="32" viewBox="0 0 260 260" fill="none" aria-hidden="true" className="flex-shrink-0">
               <rect x="18" y="18" width="224" height="224" rx="34" ry="34"
                 fill="rgba(124,58,237,0.08)" stroke="#7C3AED" strokeWidth="8"/>
@@ -53,44 +51,41 @@ export default function Navbar() {
               <circle fill="#A78BFA" cx="54" cy="180" r="15"/>
               <circle fill="#A78BFA" cx="108" cy="151" r="15"/>
             </svg>
-            <span
-              className="font-bold text-base tracking-tight"
-              style={{ color: "#E8EEFF" }}
-            >
+            <span className="font-bold text-base tracking-tight" style={{ color: "#E8EEFF" }}>
               Measure<span style={{ color: "#A78BFA" }}>Lens</span>
             </span>
-          </a>
+          </Link>
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((l) => (
-              <a
+              <Link
                 key={l.label}
                 href={l.href}
                 className="text-sm font-medium transition-colors duration-150"
-                style={{ color: "#8892B4" }}
+                style={{ color: "#8892B4", textDecoration: "none" }}
                 onMouseEnter={e => (e.currentTarget.style.color = "#E8EEFF")}
                 onMouseLeave={e => (e.currentTarget.style.color = "#8892B4")}
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
-            <a
-              href="#cta"
+            <Link
+              href="/contact"
               className="text-sm font-medium transition-colors duration-150"
-              style={{ color: "#8892B4" }}
+              style={{ color: "#8892B4", textDecoration: "none" }}
               onMouseEnter={e => (e.currentTarget.style.color = "#E8EEFF")}
               onMouseLeave={e => (e.currentTarget.style.color = "#8892B4")}
             >
-              Sign in
-            </a>
-            <a href="#cta" className="btn-primary" style={{ padding: "9px 18px", fontSize: "0.85rem" }}>
+              Contact
+            </Link>
+            <Link href="/#cta" className="btn-primary" style={{ padding: "9px 18px", fontSize: "0.85rem" }}>
               Request Access
-            </a>
+            </Link>
           </div>
 
           {/* Mobile menu toggle */}
@@ -119,20 +114,28 @@ export default function Navbar() {
             style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
           >
             {navLinks.map((l) => (
-              <a
+              <Link
                 key={l.label}
                 href={l.href}
                 className="block px-3 py-2.5 rounded-lg text-sm font-medium"
-                style={{ color: "#8892B4" }}
+                style={{ color: "#8892B4", textDecoration: "none" }}
                 onClick={() => setMenuOpen(false)}
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
+            <Link
+              href="/contact"
+              className="block px-3 py-2.5 rounded-lg text-sm font-medium"
+              style={{ color: "#8892B4", textDecoration: "none" }}
+              onClick={() => setMenuOpen(false)}
+            >
+              Contact
+            </Link>
             <div className="pt-3 px-3">
-              <a href="#cta" className="btn-primary w-full justify-center" onClick={() => setMenuOpen(false)}>
+              <Link href="/#cta" className="btn-primary w-full justify-center" onClick={() => setMenuOpen(false)}>
                 Request Access
-              </a>
+              </Link>
             </div>
           </div>
         )}

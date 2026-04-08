@@ -1,13 +1,30 @@
 "use client";
 
+import Link from "next/link";
+
 export default function Footer() {
   const year = new Date().getFullYear();
 
-  const links = {
-    Product:  ["How it works", "LensOS", "Pricing", "Changelog"],
-    Company:  ["About", "Blog", "Careers", "Contact"],
-    Resources:["Docs", "API Reference", "Status", "Security"],
-    Legal:    ["Privacy", "Terms", "Cookie Policy"],
+  const links: Record<string, { label: string; href: string }[]> = {
+    Product: [
+      { label: "How it works",  href: "/#how-it-works" },
+      { label: "LensOS",        href: "/lensos" },
+      { label: "Pricing",       href: "/pricing" },
+      { label: "Insights",      href: "/insights" },
+    ],
+    Company: [
+      { label: "About",         href: "/about" },
+      { label: "Blog",          href: "/blog" },
+      { label: "Contact",       href: "/contact" },
+    ],
+    Resources: [
+      { label: "Docs",          href: "/docs" },
+      { label: "Early Access",  href: "/#cta" },
+    ],
+    Legal: [
+      { label: "Privacy",       href: "/privacy" },
+      { label: "Terms",         href: "/terms" },
+    ],
   };
 
   return (
@@ -21,7 +38,7 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2.5 mb-4">
+            <Link href="/" className="flex items-center gap-2.5 mb-4" style={{ textDecoration: "none" }}>
               <svg width="32" height="32" viewBox="0 0 260 260" fill="none" aria-hidden="true" className="flex-shrink-0">
                 <rect x="18" y="18" width="224" height="224" rx="34" ry="34"
                   fill="rgba(124,58,237,0.08)" stroke="#7C3AED" strokeWidth="8"/>
@@ -39,10 +56,10 @@ export default function Footer() {
               <span className="font-bold text-base tracking-tight" style={{ color: "#E8EEFF" }}>
                 Measure<span style={{ color: "#A78BFA" }}>Lens</span>
               </span>
-            </div>
+            </Link>
             <p className="text-sm leading-relaxed mb-5" style={{ color: "#6B7CB0", maxWidth: 280 }}>
-              Marketing measurement intelligence that tells you what's real — not what
-              each platform wants you to believe.
+              Marketing measurement intelligence that tells you what is real.
+              Built for teams tired of picking the number that sounds most defensible.
             </p>
             <div className="flex items-center gap-2">
               <span
@@ -66,16 +83,16 @@ export default function Footer() {
               </p>
               <ul className="space-y-2.5">
                 {items.map((item) => (
-                  <li key={item}>
-                    <a
-                      href="#"
+                  <li key={item.label}>
+                    <Link
+                      href={item.href}
                       className="text-sm transition-colors duration-150"
-                      style={{ color: "#6B7CB0" }}
+                      style={{ color: "#6B7CB0", textDecoration: "none" }}
                       onMouseEnter={(e) => (e.currentTarget.style.color = "#C4CAEE")}
                       onMouseLeave={(e) => (e.currentTarget.style.color = "#6B7CB0")}
                     >
-                      {item}
-                    </a>
+                      {item.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -89,13 +106,24 @@ export default function Footer() {
         {/* Bottom row */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs" style={{ color: "#4B5563" }}>
-            © {year} MeasureLens, Inc. All rights reserved.
+            {year} MeasureLens, Inc. All rights reserved.
           </p>
 
           {/* LensOS badge */}
-          <div
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg"
-            style={{ background: "rgba(124,58,237,0.07)", border: "1px solid rgba(124,58,237,0.15)" }}
+          <Link
+            href="/lensos"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors duration-150"
+            style={{
+              background: "rgba(124,58,237,0.07)",
+              border: "1px solid rgba(124,58,237,0.15)",
+              textDecoration: "none",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.background = "rgba(124,58,237,0.12)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.background = "rgba(124,58,237,0.07)";
+            }}
           >
             <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
               <path d="M7 1L13 4.5V9.5L7 13L1 9.5V4.5L7 1Z" stroke="#A78BFA" strokeWidth="1.2" fill="none"/>
@@ -104,13 +132,14 @@ export default function Footer() {
             <span className="text-xs font-mono font-medium" style={{ color: "#A78BFA" }}>
               Powered by LensOS
             </span>
-          </div>
+          </Link>
 
           {/* Socials */}
           <div className="flex items-center gap-4">
             {[
               {
                 label: "Twitter / X",
+                href: "#",
                 icon: (
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -119,6 +148,7 @@ export default function Footer() {
               },
               {
                 label: "LinkedIn",
+                href: "#",
                 icon: (
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
@@ -129,7 +159,7 @@ export default function Footer() {
             ].map((s) => (
               <a
                 key={s.label}
-                href="#"
+                href={s.href}
                 aria-label={s.label}
                 className="transition-colors duration-150"
                 style={{ color: "#4B5563" }}
