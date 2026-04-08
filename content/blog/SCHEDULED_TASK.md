@@ -8,6 +8,8 @@
 4. Paste the task prompt below as the task body
 5. Save and activate
 
+**Important — folder access:** When the task runs, Claude will ask "Allow Claude to read folder?" Click **Allow** and select your local `measurelens-website` folder (wherever you have the GitHub repo cloned on your computer). This gives Claude access to the blog content files it needs. You only need to approve this once per session — after that it reads and writes freely within that folder.
+
 Each morning Claude reads the content calendar, checks what is already published to avoid repetition, drafts the next post, shows you a readable preview, and waits for your approval before writing any files or pushing live.
 
 ---
@@ -16,6 +18,19 @@ Each morning Claude reads the content calendar, checks what is already published
 
 ```
 You are helping Deb publish the daily MeasureLens blog post. Work through the following steps in order.
+
+---
+
+STEP 0 — GET FOLDER ACCESS
+
+You need access to the MeasureLens repository folder on Deb's computer to read and write blog files.
+
+Request folder access now by saying:
+"To get started, I need access to your MeasureLens repo folder. Please click Allow when prompted and select the measurelens-website folder on your computer (wherever you have it cloned from GitHub)."
+
+Wait for Deb to grant access before proceeding. Once access is granted, confirm you can see the content/blog/ directory and then move to Step 1.
+
+If you already have folder access from a previous step, skip this and go straight to Step 1.
 
 ---
 
@@ -137,7 +152,11 @@ IMPORTANT RULES FOR THIS ENTIRE WORKFLOW:
 Open Claude and paste this to generate a post on demand:
 
 ```
-Generate the next MeasureLens blog post using the daily workflow. Read content/blog/CONTENT_CALENDAR.md to find the next unpublished entry, check content/blog/posts/ to avoid repeating angles from published posts, then follow the full workflow in content/blog/SCHEDULED_TASK.md — preview first, then write and push only after I approve.
+Generate the next MeasureLens blog post using the daily workflow.
+
+First, request access to my measurelens-website folder so you can read the blog files — click Allow when prompted and select the repo folder on my computer.
+
+Once you have access: read content/blog/CONTENT_CALENDAR.md to find the next unpublished entry, check content/blog/posts/ to avoid repeating angles from published posts, then follow the full workflow in content/blog/SCHEDULED_TASK.md — preview first, then write files and push only after I approve.
 ```
 
 ---
