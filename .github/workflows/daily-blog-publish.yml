@@ -1,0 +1,59 @@
+name: Daily Blog Post
+
+# Runs at 12:00 UTC (8:00 AM EDT / 7:00 AM EST) every day.
+# Also triggerable manually from the GitHub Actions tab.
+on:
+  schedule:
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+    inputs:
+      post_date:
+        description: 'Override date (YYYY-MM-DD). Leave blank for today.'
+        required: false
+        default: ''
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write   # required to push the generated post back to the repo
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Use PAT if you have one; GITHUB_TOKEN works for same-repo pushes.
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: pip install anthropic
+
+      - name: Generate today's blog post
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          POST_DATE: ${{ github.event.inputs.post_date }}
+        run: python scripts/generate-post.py
+
+      - name: Check for new files
+        id: changes
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit and push new post
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git config user.name  "MeasureLens Blog Bot"
+          git config user.email "bot@measurelens.com"
+          git add content/blog/
+          git commit -m "chore: publish scheduled blog post for $(date +%Y-%m-%d)"
+          git push
