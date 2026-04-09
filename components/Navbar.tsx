@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 const navLinks = [
-  { label: "About",      href: "/about" },
-  { label: "LensOS",     href: "/lensos" },
-  { label: "Blog",       href: "/blog" },
-  { label: "Insights",   href: "/insights" },
+  { label: "Platform",     href: "/#lensos" },
+  { label: "Methodology",  href: "/#how-it-works" },
+  { label: "Blog",         href: "/blog" },
+  { label: "About",        href: "/about" },
 ];
 
 export default function Navbar() {

@@ -2,28 +2,27 @@
 
 import { useEffect, useState } from "react";
 
-const lines = [
-  { label: "Meta ROAS",   value: "4.0×", status: "DISPUTED",   color: "status-disputed"   },
-  { label: "Google ROAS", value: "3.5×", status: "PARTIAL",    color: "status-partial"    },
-  { label: "GA4 ROAS",    value: "2.8×", status: "UNVERIFIED", color: "status-unverified" },
-  { label: "MMM iROAS",   value: "2.0×", status: "CONFIRMED",  color: "status-confirmed"  },
+const channels = [
+  { label: "Paid Social",   iroas: "1.2×", mcs: 31,  status: "DISPUTED",   color: "#F87171", action: "Cut $50K" },
+  { label: "SEM Brand",     iroas: "5.1×", mcs: 84,  status: "CONFIRMED",  color: "#34D399", action: "+$80K" },
+  { label: "CTV / Video",   iroas: "2.8×", mcs: 71,  status: "PARTIAL",    color: "#FCD34D", action: "+$70K" },
+  { label: "Email / CRM",   iroas: "3.9×", mcs: 78,  status: "CONFIRMED",  color: "#34D399", action: "Hold" },
 ];
 
-const output = {
-  label:      "True ROAS",
-  value:      "2.4×",
-  confidence: "78 / 100",
-  band:       "MODERATE",
-  action:     "Reduce Meta spend 20% · Google under-attributed · run holdout",
+const decision = {
+  action:     "Shift $200K: Paid Social → SEM Brand + CTV",
+  impact:     "+$310K projected revenue",
+  confidence: "HIGH · MCS 79/100",
+  experiment: "Geo holdout brief ready →",
 };
 
 export default function Hero() {
   const [phase, setPhase] = useState(0);
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase(1), 800);
-    const t2 = setTimeout(() => setPhase(2), 2200);
-    const t3 = setTimeout(() => setPhase(3), 3600);
+    const t1 = setTimeout(() => setPhase(1), 700);
+    const t2 = setTimeout(() => setPhase(2), 2000);
+    const t3 = setTimeout(() => setPhase(3), 3400);
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
   }, []);
 
@@ -33,8 +32,8 @@ export default function Hero() {
       {/* Glow orbs */}
       <div
         className="glow-orb"
-        style={{ width: 600, height: 600, top: "-200px", left: "50%", transform: "translateX(-30%)",
-          background: "radial-gradient(ellipse, rgba(124,58,237,0.18) 0%, transparent 70%)" }}
+        style={{ width: 700, height: 600, top: "-200px", left: "50%", transform: "translateX(-30%)",
+          background: "radial-gradient(ellipse, rgba(124,58,237,0.20) 0%, transparent 70%)" }}
       />
       <div
         className="glow-orb"
@@ -48,20 +47,21 @@ export default function Hero() {
           {/* Left: copy */}
           <div>
             <div className="section-tag animate-fade-in">
-              <span>Marketing Measurement</span>
+              <span style={{ color: "#A78BFA" }}>●</span>
+              <span>Decisioning OS for Growth Teams</span>
             </div>
 
             <h1
               className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] mb-6"
             >
               <span className="block text-white animate-fade-up" style={{ animationDelay: "0.15s" }}>
-                Four platforms.
+                Know exactly
               </span>
               <span className="block animate-fade-up" style={{ animationDelay: "0.25s" }}>
-                <span className="gradient-text">Four answers.</span>
+                <span className="gradient-text">where to invest</span>
               </span>
               <span className="block text-white animate-fade-up" style={{ animationDelay: "0.35s" }}>
-                One is real.
+                next.
               </span>
             </h1>
 
@@ -69,9 +69,9 @@ export default function Hero() {
               className="text-lg leading-relaxed mb-8 max-w-lg animate-fade-up"
               style={{ color: "#8892B4", animationDelay: "0.45s" }}
             >
-              Every ad platform reports a different ROAS. None of them agree.
-              Most marketing teams pick the number that sounds right and move on.
-              We are building something that tells you which one to actually trust.
+              LensOS is the AI-native commercial intelligence platform that connects
+              Bayesian measurement, causal validation, and prescriptive budget optimization
+              into a single always-on decisioning loop.
             </p>
 
             <div
@@ -94,63 +94,104 @@ export default function Hero() {
               </a>
             </div>
 
-            <p
-              className="text-sm animate-fade-up"
-              style={{ color: "rgba(107,124,176,0.6)", animationDelay: "0.65s" }}
+            {/* Methodology chips */}
+            <div
+              className="flex flex-wrap gap-2 animate-fade-up"
+              style={{ animationDelay: "0.65s" }}
             >
-              Built for performance marketers and growth leaders who are tired of
-              guessing which number to believe.
-            </p>
+              {[
+                "Bayesian Hierarchical MMM",
+                "Causal Validation",
+                "Scenario Simulation",
+                "Prescriptive Optimization",
+              ].map((chip) => (
+                <span
+                  key={chip}
+                  className="text-xs font-mono px-3 py-1 rounded-full"
+                  style={{
+                    color: "rgba(167,139,250,0.7)",
+                    background: "rgba(124,58,237,0.06)",
+                    border: "1px solid rgba(124,58,237,0.18)",
+                  }}
+                >
+                  {chip}
+                </span>
+              ))}
+            </div>
           </div>
 
-          {/* Right: terminal illustration */}
+          {/* Right: decision engine terminal */}
           <div
             className="terminal p-5 lg:p-6 animate-fade-up"
             style={{ animationDelay: "0.4s" }}
           >
             {/* Title bar */}
-            <div className="flex items-center gap-2 mb-5 pb-4" style={{ borderBottom: "1px solid rgba(124,58,237,0.15)" }}>
+            <div className="flex items-center gap-2 mb-4 pb-4" style={{ borderBottom: "1px solid rgba(124,58,237,0.15)" }}>
               <span className="terminal-dot bg-red-500 opacity-70" />
               <span className="terminal-dot bg-yellow-400 opacity-70" />
               <span className="terminal-dot bg-green-400 opacity-70" />
               <span className="ml-3 text-xs font-mono" style={{ color: "#6B7CB0" }}>
-                lensos — signal reconciliation
+                lensos — budget decision engine
               </span>
               {phase >= 1 && (
                 <span className="ml-auto text-xs font-mono" style={{ color: "#7C3AED" }}>
-                  {phase === 1 ? "ingesting..." : phase === 2 ? "reconciling..." : "✓ complete"}
+                  {phase === 1 ? "measuring..." : phase === 2 ? "optimizing..." : "✓ decision ready"}
                 </span>
               )}
             </div>
 
-            {/* Source signals */}
-            <div className="space-y-2 mb-5">
-              <p className="text-xs font-mono mb-3" style={{ color: "#6B7CB0" }}>
-                $ lensos reconcile --client acme-co --period 2024-Q4
+            {/* Query */}
+            <div className="mb-4">
+              <p className="text-xs font-mono mb-1" style={{ color: "#4A5180" }}>$ query</p>
+              <p className="text-xs font-mono" style={{ color: "#6B7CB0" }}>
+                "Where should I reallocate $200K this quarter?"
               </p>
-              {lines.map((l) => (
-                <div key={l.label} className="flex items-center justify-between py-1.5 px-3 rounded" style={{ background: "rgba(255,255,255,0.02)" }}>
-                  <span className="text-sm font-mono" style={{ color: "#8892B4", minWidth: 130 }}>
-                    {l.label}
+            </div>
+
+            {/* Channel signals */}
+            <div className="space-y-1.5 mb-4">
+              <p className="text-xs font-mono mb-2" style={{ color: "#4A5180" }}>
+                ↳ analyzing channels · iROAS + confidence
+              </p>
+              {channels.map((ch) => (
+                <div
+                  key={ch.label}
+                  className="flex items-center gap-2 py-1.5 px-3 rounded"
+                  style={{ background: "rgba(255,255,255,0.02)" }}
+                >
+                  <span className="text-xs font-mono flex-1" style={{ color: "#8892B4", minWidth: 110 }}>
+                    {ch.label}
                   </span>
-                  <span className="text-sm font-mono font-semibold" style={{ color: "#C4CAEE" }}>
-                    {l.value}
+                  <span className="text-xs font-mono font-semibold w-10" style={{ color: "#C4CAEE" }}>
+                    {ch.iroas}
                   </span>
-                  <span className={`text-xs font-mono font-medium ${l.color}`}>
-                    [{l.status}]
+                  <div
+                    className="h-1 rounded-full flex-1 max-w-16"
+                    style={{ background: "rgba(255,255,255,0.06)" }}
+                  >
+                    <div
+                      className="h-full rounded-full"
+                      style={{ width: `${ch.mcs}%`, background: ch.color }}
+                    />
+                  </div>
+                  <span
+                    className="text-xs font-mono w-20 text-right"
+                    style={{ color: ch.color }}
+                  >
+                    [{ch.status}]
                   </span>
                 </div>
               ))}
             </div>
 
             {/* Divider */}
-            <div className="divider-glow mb-5" />
+            <div className="divider-glow mb-4" />
 
-            {/* Output */}
+            {/* Decision output */}
             {phase < 3 ? (
               <div className="flex items-center gap-3 py-2 px-3">
                 <div className="flex gap-1">
-                  {[0,1,2].map(i => (
+                  {[0, 1, 2].map((i) => (
                     <span
                       key={i}
                       className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-bounce"
@@ -159,29 +200,39 @@ export default function Hero() {
                   ))}
                 </div>
                 <span className="text-sm font-mono" style={{ color: "#6B7CB0" }}>
-                  {phase === 0 ? "Ready." : phase === 1 ? "Ingesting signals..." : "Resolving conflicts..."}
+                  {phase === 0 ? "Awaiting input..." : phase === 1 ? "Running Bayesian MMM..." : "Simulating scenarios..."}
                 </span>
               </div>
             ) : (
-              <div className="space-y-3 animate-fade-up">
-                <div className="flex items-center justify-between py-2 px-3 rounded-lg" style={{ background: "rgba(124,58,237,0.08)", border: "1px solid rgba(124,58,237,0.2)" }}>
-                  <span className="text-sm font-mono font-bold" style={{ color: "#A78BFA" }}>
-                    {output.label}
-                  </span>
-                  <span className="text-xl font-mono font-bold text-white">
-                    {output.value}
-                  </span>
-                  <div className="text-right">
-                    <span className="text-xs font-mono status-confirmed block">
-                      MCS {output.confidence}
-                    </span>
-                    <span className="text-xs font-mono status-confirmed">[{output.band}]</span>
+              <div className="space-y-2 animate-fade-up">
+                <div
+                  className="py-2.5 px-3 rounded-lg"
+                  style={{ background: "rgba(124,58,237,0.08)", border: "1px solid rgba(124,58,237,0.2)" }}
+                >
+                  <p className="text-xs font-mono font-semibold mb-1.5" style={{ color: "#A78BFA" }}>
+                    → DECISION
+                  </p>
+                  <p className="text-sm font-mono font-bold text-white">{decision.action}</p>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div
+                    className="py-2 px-3 rounded"
+                    style={{ background: "rgba(16,185,129,0.06)", border: "1px solid rgba(16,185,129,0.15)" }}
+                  >
+                    <p className="text-xs font-mono" style={{ color: "#34D399" }}>↑ {decision.impact}</p>
+                  </div>
+                  <div
+                    className="py-2 px-3 rounded"
+                    style={{ background: "rgba(124,58,237,0.06)", border: "1px solid rgba(124,58,237,0.15)" }}
+                  >
+                    <p className="text-xs font-mono" style={{ color: "#A78BFA" }}>{decision.confidence}</p>
                   </div>
                 </div>
-                <div className="py-2 px-3 rounded" style={{ background: "rgba(16,185,129,0.06)", border: "1px solid rgba(16,185,129,0.15)" }}>
-                  <p className="text-xs font-mono" style={{ color: "#34D399" }}>
-                    → {output.action}
-                  </p>
+                <div
+                  className="py-1.5 px-3 rounded"
+                  style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}
+                >
+                  <p className="text-xs font-mono" style={{ color: "#4A5180" }}>{decision.experiment}</p>
                 </div>
               </div>
             )}
@@ -190,7 +241,10 @@ export default function Hero() {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fade-in" style={{ animationDelay: "1.5s" }}>
+      <div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fade-in"
+        style={{ animationDelay: "1.5s" }}
+      >
         <span className="text-xs" style={{ color: "rgba(107,124,176,0.5)", letterSpacing: "0.08em" }}>SCROLL</span>
         <div className="w-px h-10" style={{ background: "linear-gradient(to bottom, rgba(124,58,237,0.4), transparent)" }} />
       </div>

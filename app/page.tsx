@@ -4,8 +4,8 @@ import WhyROASWrong    from "@/components/sections/WhyROASWrong";
 import Problem         from "@/components/sections/Problem";
 import Solution        from "@/components/sections/Solution";
 import LensOS          from "@/components/sections/LensOS";
-import HowItWorks      from "@/components/sections/HowItWorks";
 import Output          from "@/components/sections/Output";
+import HowItWorks      from "@/components/sections/HowItWorks";
 import Differentiation from "@/components/sections/Differentiation";
 import IdealCustomer   from "@/components/sections/IdealCustomer";
 import CTA             from "@/components/sections/CTA";
@@ -17,38 +17,38 @@ export default function Home() {
       <Navbar />
 
       <main>
-        {/* ① Above the fold — immediate value + curiosity */}
+        {/* ① Hero — decisioning OS positioning with live budget decision widget */}
         <Hero />
 
-        {/* ② Hook — why every ROAS number is structurally wrong */}
+        {/* ② Why legacy measurement fails — the market gap */}
         <WhyROASWrong />
 
-        {/* ③ The concrete problem — four platforms, four answers */}
+        {/* ③ The concrete problem — conflicting signals, no confident decision */}
         <section id="problem">
           <Problem />
         </section>
 
-        {/* ④ The solution — triangulation, evidence scoring */}
+        {/* ④ The architecture — Measure → Validate → Simulate → Decide loop */}
         <Solution />
 
-        {/* ⑤ LensOS — the agentic AI reasoning engine */}
+        {/* ⑤ Platform — five integrated capabilities */}
         <section id="lensos">
           <LensOS />
         </section>
 
-        {/* ⑥ How it works — simple 4-step flow */}
-        <HowItWorks />
-
-        {/* ⑦ Output — tangible per-channel decisions */}
+        {/* ⑥ What the output looks like — per-channel decisions with evidence */}
         <Output />
 
-        {/* ⑧ Differentiation — vs dashboards, MTA, MMM */}
+        {/* ⑦ Technical foundation — built differently from the ground up */}
+        <HowItWorks />
+
+        {/* ⑧ Competitive differentiation — LensOS vs legacy commercial intelligence */}
         <Differentiation />
 
-        {/* ⑨ Ideal customer — who this is built for */}
+        {/* ⑨ Who it's for — enterprise growth teams */}
         <IdealCustomer />
 
-        {/* ⑩ CTA — request access */}
+        {/* ⑩ CTA — enterprise close */}
         <CTA />
       </main>
 

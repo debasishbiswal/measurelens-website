@@ -3,10 +3,29 @@ import { useScrollReveal } from "../ui/useScrollReveal";
 
 const profiles = [
   {
-    role: "Growth Marketer",
-    company: "DTC brand, $50K–$200K/month ad spend",
-    pain: "Stuck choosing between Meta's ROAS report and the GA4 numbers that don't match. Making budget decisions by gut because nothing agrees.",
-    gains: ["Unified ROAS per channel", "Clear scale / cut guidance", "No analytics team needed"],
+    role: "CMO / VP Marketing",
+    company: "Enterprise · $5M–$50M annual media budget",
+    pain: "My board wants to know if our $18M media investment is working. My agency gives me ROAS numbers. My MMM vendor sends a quarterly report 12 weeks late. I need something that helps me make a decision this week — not something that explains last quarter.",
+    gains: [
+      "Executive-ready briefings with confidence intervals",
+      "Scenario planning before board and budget meetings",
+      "Defensible budget rationale backed by causal evidence",
+    ],
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+      </svg>
+    ),
+  },
+  {
+    role: "Head of Growth / Performance",
+    company: "Scale-up · $500K–$5M/month ad spend",
+    pain: "I need to know whether to push harder on paid or diversify into CTV before our planning cycle closes. My team has three different analyses saying three different things. I need a system that gives me a single confident answer — with the uncertainty quantified.",
+    gains: [
+      "Per-channel prescriptive decisions with confidence bands",
+      "Budget reallocation recommendations with iROAS evidence",
+      "Experiment design briefs for the highest-priority gaps",
+    ],
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
@@ -14,21 +33,14 @@ const profiles = [
     ),
   },
   {
-    role: "VP / Director of Marketing",
-    company: "Series A–C startup, $200K–$500K/month",
-    pain: "CFO wants real attribution numbers before approving Q3 budget increase. Can't go to the board with four conflicting data sources.",
-    gains: ["Board-ready confidence scores", "Source disagreement breakdown", "Defensible budget rationale"],
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-      </svg>
-    ),
-  },
-  {
-    role: "Performance Lead / Media Buyer",
-    company: "Agency or in-house, $10K–$100K/month",
-    pain: "Clients ask why Google says 3.5× and Meta says 4.0×. The answer 'attribution window differences' isn't good enough anymore.",
-    gains: ["Per-channel true iROAS", "Client-ready reports", "Incrementality test briefs"],
+    role: "Analytics / Data Science Lead",
+    company: "Any stage · Building measurement infrastructure",
+    pain: "We've got MMM, MTA, and geo test results. They all say something different and none of them produce an output my CMO can act on. I need a reconciliation framework that integrates causal evidence from multiple sources and surfaces the uncertainty — not hides it.",
+    gains: [
+      "Principled evidence reconciliation across MMM, MTA, and experiments",
+      "Model cards and audit trails for cross-functional trust",
+      "API exports and deck-ready outputs for stakeholder delivery",
+    ],
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <rect x="2" y="3" width="20" height="14" rx="2"/>
@@ -39,12 +51,12 @@ const profiles = [
 ];
 
 const signals = [
-  "You've ever said 'it depends which platform you look at'",
-  "You've averaged ROAS numbers to get a 'blended' view",
-  "You cut a channel and couldn't tell if revenue actually dropped",
-  "You scaled Meta because the dashboard said 4× but CAC didn't improve",
-  "You've wanted an MMM but couldn't justify the cost or wait time",
-  "Your data team is too busy to run incrementality tests",
+  "You've run a geo holdout that came back 'inconclusive' and didn't know what to do with it",
+  "Your MMM was delivered 10 weeks ago and is already being questioned by finance",
+  "You've committed budget based on a number you privately don't trust",
+  "Your CFO asked for a confidence interval and you couldn't provide one",
+  "You have three measurement tools and still can't answer 'what should we cut?'",
+  "You know you need causal measurement but can't justify a $200K consulting engagement",
 ];
 
 export default function IdealCustomer() {
@@ -57,15 +69,16 @@ export default function IdealCustomer() {
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 reveal-on-scroll">
           <div className="section-tag justify-center" style={{ color: "#7C3AED" }}>
-            <span>Who It's For</span>
+            <span>Who It's Built For</span>
           </div>
           <h2 className="text-4xl lg:text-5xl font-bold tracking-tight mb-5" style={{ color: "#0F0F2A" }}>
-            Built for teams who've
-            <span style={{ background: "linear-gradient(135deg,#7C3AED,#4F46E5)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}> outgrown dashboards.</span>
+            Built for teams making
+            <span style={{ background: "linear-gradient(135deg,#7C3AED,#4F46E5)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}> high-stakes growth decisions.</span>
           </h2>
           <p className="text-lg" style={{ color: "#6B7280" }}>
-            Spending $10K–$500K/month on ads and making decisions without confidence.
-            You know your numbers are wrong — you just don't know by how much.
+            If you're allocating significant media budget and need decisions — not
+            just measurement — grounded in causal evidence and explicit uncertainty,
+            LensOS is built for you.
           </p>
         </div>
 
@@ -99,10 +112,7 @@ export default function IdealCustomer() {
               <p className="text-sm leading-relaxed mb-5" style={{ color: "#6B7280" }}>
                 {p.pain}
               </p>
-              <div
-                className="h-px mb-5"
-                style={{ background: "rgba(0,0,0,0.07)" }}
-              />
+              <div className="h-px mb-5" style={{ background: "rgba(0,0,0,0.07)" }} />
               <ul className="space-y-2">
                 {p.gains.map((g) => (
                   <li key={g} className="flex items-start gap-2.5">
@@ -131,7 +141,7 @@ export default function IdealCustomer() {
           }}
         >
           <p className="text-lg font-semibold text-center mb-8" style={{ color: "#0F0F2A" }}>
-            MeasureLens is probably right for you if you've ever said or done any of these:
+            LensOS was built for you if any of these sound familiar:
           </p>
           <div className="grid md:grid-cols-2 gap-3">
             {signals.map((s) => (

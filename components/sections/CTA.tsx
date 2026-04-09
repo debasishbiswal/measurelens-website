@@ -10,15 +10,6 @@ export default function CTA() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-
-    // TODO: replace with real waitlist endpoint
-    // e.g. POST /api/waitlist  →  Resend / Loops / ConvertKit
-    // await fetch("/api/waitlist", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ email }),
-    // });
-
     setSubmitted(true);
   };
 
@@ -38,7 +29,7 @@ export default function CTA() {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          background: "radial-gradient(ellipse, rgba(124,58,237,0.12) 0%, transparent 65%)",
+          background: "radial-gradient(ellipse, rgba(124,58,237,0.14) 0%, transparent 65%)",
         }}
       />
       {/* Subtle grid */}
@@ -71,26 +62,49 @@ export default function CTA() {
           className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.05] reveal-on-scroll reveal-delay-1"
           style={{ color: "#E8EEFF" }}
         >
-          This problem is
+          The future of growth
           <br />
-          <span className="gradient-text">worth solving.</span>
+          <span className="gradient-text">decisioning is here.</span>
         </h2>
 
         <p
           className="text-xl mb-4 reveal-on-scroll reveal-delay-2"
           style={{ color: "#8892B4" }}
         >
-          We are building MeasureLens for marketing leaders who are tired of
-          staring at conflicting numbers and not knowing which one to trust.
+          Join the growth teams replacing consulting-heavy MMM programs with
+          AI-native commercial intelligence that's causal, confident, and always-on.
         </p>
         <p
           className="text-base mb-12 leading-relaxed reveal-on-scroll reveal-delay-2"
           style={{ color: "rgba(107,124,176,0.6)" }}
         >
-          The product is in active development. We are looking for early conversations
-          with performance marketers, heads of growth, and marketing executives who
-          feel this problem firsthand and want to shape what we build.
+          LensOS is in active rollout. We're talking with growth leaders who are
+          ready to move beyond quarterly reports and build a principled,
+          always-on decisioning system for their marketing investment.
         </p>
+
+        {/* Primary CTAs */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10 reveal-on-scroll reveal-delay-2">
+          <a
+            href="https://app.measurelens.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary"
+            style={{ padding: "14px 28px", fontSize: "0.95rem" }}
+          >
+            Launch LensOS
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </a>
+          <a
+            href="mailto:hello@measurelens.com"
+            className="btn-ghost"
+            style={{ padding: "14px 28px", fontSize: "0.95rem" }}
+          >
+            Book a Discovery Call
+          </a>
+        </div>
 
         {/* CTA form */}
         {!submitted ? (
@@ -113,8 +127,8 @@ export default function CTA() {
               onFocus={(e) => (e.currentTarget.style.borderColor = "rgba(124,58,237,0.5)")}
               onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)")}
             />
-            <button type="submit" className="btn-primary">
-              Join the Waitlist
+            <button type="submit" className="btn-primary" style={{ whiteSpace: "nowrap" }}>
+              Stay Updated
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
@@ -129,7 +143,7 @@ export default function CTA() {
               <path d="M20 6L9 17l-5-5"/>
             </svg>
             <p className="text-sm font-medium" style={{ color: "#34D399" }}>
-              You are on the list. We will reach out directly.
+              You're on the list. We'll be in touch directly.
             </p>
           </div>
         )}
@@ -138,46 +152,36 @@ export default function CTA() {
           className="text-xs mb-16 reveal-on-scroll reveal-delay-3"
           style={{ color: "rgba(107,124,176,0.4)" }}
         >
-          No sales pitch. No demo environment. Just an honest conversation about the problem.
+          No pitch deck. No canned demo. A direct conversation about your measurement stack.
         </p>
 
-        {/* Secondary CTA */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center reveal-on-scroll reveal-delay-4">
-          <a href="#how-it-works" className="btn-ghost">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M12 22V8M5 15l7 7 7-7"/>
-            </svg>
-            See our approach
-          </a>
-          <a href="#lensos" className="btn-ghost">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <circle cx="12" cy="12" r="3"/>
-              <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4"/>
-            </svg>
-            How LensOS works
-          </a>
-        </div>
-
-        {/* Trust row */}
+        {/* Methodology trust row */}
         <div
-          className="mt-20 pt-10 reveal-on-scroll reveal-delay-5"
+          className="mt-16 pt-10 reveal-on-scroll reveal-delay-4"
           style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
         >
           <p
             className="text-xs uppercase tracking-widest mb-6 font-semibold"
             style={{ color: "rgba(107,124,176,0.35)" }}
           >
-            Designed to work with the data your team already has
+            Built on
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-8">
-            {["Meta Ads", "Google Ads", "GA4", "MMM Output", "MTA Feeds", "Incrementality Experiments"].map((t) => (
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            {[
+              "Bayesian Hierarchical MMM",
+              "BSTS / CausalImpact",
+              "Constrained Optimizer",
+              "Deterministic Reconciliation",
+              "Governed LLM Agent",
+              "Audit Pack Exports",
+            ].map((t) => (
               <span
                 key={t}
                 className="text-sm font-semibold px-4 py-2 rounded-lg"
                 style={{
-                  color: "rgba(184,192,224,0.4)",
+                  color: "rgba(184,192,224,0.45)",
                   background: "rgba(255,255,255,0.02)",
-                  border: "1px solid rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.05)",
                 }}
               >
                 {t}

@@ -2,24 +2,24 @@
 import { useScrollReveal } from "../ui/useScrollReveal";
 
 const sources = [
-  { platform: "Meta",   roas: "4.0×", color: "#4267B2", status: "DISPUTED",   statusColor: "#F87171", note: "Last-click, 7-day view window" },
-  { platform: "Google", roas: "3.5×", color: "#4285F4", status: "PARTIAL",    statusColor: "#FCD34D", note: "Search + Display overlap" },
-  { platform: "GA4",    roas: "2.8×", color: "#E37400", status: "UNVERIFIED", statusColor: "#94A3B8", note: "Cross-device gaps" },
-  { platform: "MMM",    roas: "2.0×", color: "#10B981", status: "CONFIRMED",  statusColor: "#34D399", note: "Causal, but 6-week lag" },
+  { platform: "Meta Ads",   roas: "4.0×", color: "#4267B2", status: "DISPUTED",   statusColor: "#F87171", note: "Last-click, 7-day view attribution" },
+  { platform: "Google Ads", roas: "3.5×", color: "#4285F4", status: "PARTIAL",    statusColor: "#FCD34D", note: "Search + Display overlap" },
+  { platform: "GA4",        roas: "2.8×", color: "#E37400", status: "UNVERIFIED", statusColor: "#94A3B8", note: "Cross-device identity gaps" },
+  { platform: "MMM iROAS",  roas: "2.0×", color: "#10B981", status: "CONFIRMED",  statusColor: "#34D399", note: "Causal, holdout-calibrated" },
 ];
 
 const pains = [
   {
-    title: "You default to the number that confirms what you already believed",
-    body: "Most teams do not average the data. They pick the platform that supports the decision they wanted to make anyway. That is not measurement. It is confirmation bias running on a media budget.",
+    title: "Your board asks a simple question. You don't have a defensible answer.",
+    body: "The CFO asks: where should we put next quarter's incremental $500K? You have four data sources. None of them agree. The answer becomes a conference call, not a decision. Every dollar allocated without confidence is a dollar that could be working harder somewhere else.",
   },
   {
-    title: "Every wrong assumption compounds at scale",
-    body: "If your true ROAS is 2.0× but you believe it is 4.0×, you are doubling down on channels that do not deserve it. At $20K per month, the error is uncomfortable. At $200K per month, it is a serious problem. It rarely gets caught until the damage is done.",
+    title: "Every misinformed bet compounds as you scale.",
+    body: "If your true iROAS is 1.2× but you believe it's 4.0×, you double down on a channel that doesn't deserve it. At $500K/month, that misallocation costs millions annually — and it almost never gets caught until the damage shows up in revenue, not dashboards.",
   },
   {
-    title: "No one has a clear answer yet",
-    body: "MMM takes six weeks and a consultant. Incrementality tests require traffic volume and patience. Most teams cycle back to the same place: staring at platform dashboards and hoping they are not being misled. We think there is a better path.",
+    title: "The tools that could help take too long and cost too much.",
+    body: "A proper MMM engagement takes 8–16 weeks and $150K+. Geo holdout experiments require traffic and patience. Incrementality vendors give you one channel. None of them integrate. By the time the analysis arrives, the budget is already committed.",
   },
 ];
 
@@ -37,17 +37,18 @@ export default function Problem() {
 
           {/* Left: visual */}
           <div className="reveal-on-scroll">
-            <div className="section-tag" style={{ color: "#7C3AED" }}>The Attribution Problem</div>
+            <div className="section-tag" style={{ color: "#7C3AED" }}>The Attribution Reality</div>
             <h2 className="text-4xl lg:text-5xl font-bold tracking-tight mb-6" style={{ color: "#0F0F2A" }}>
-              Same campaign.{" "}
+              One campaign.{" "}
               <span style={{ background: "linear-gradient(135deg,#7C3AED,#4F46E5)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-                Four answers.
+                Four numbers.
               </span>
+              <br />Three are wrong.
             </h2>
             <p className="text-lg mb-10" style={{ color: "#6B7280" }}>
-              You run one campaign. Every platform gives you a different number.
-              The delta is not noise. It is a structural problem with how
-              each platform measures success for itself.
+              The conflict isn't noise. It's a structural problem with how every platform
+              measures success for itself. Until you resolve it, budget decisions are
+              built on the most optimistic number, not the most credible one.
             </p>
 
             {/* Source cards */}
@@ -62,7 +63,7 @@ export default function Problem() {
                     className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                     style={{ background: s.color, boxShadow: `0 0 8px ${s.color}40` }}
                   />
-                  <span className="font-semibold w-16 flex-shrink-0" style={{ color: "#0F0F2A" }}>
+                  <span className="font-semibold w-24 flex-shrink-0" style={{ color: "#0F0F2A" }}>
                     {s.platform}
                   </span>
                   <div className="flex-1">
@@ -87,9 +88,9 @@ export default function Problem() {
               style={{ background: "rgba(124,58,237,0.06)", border: "1px dashed rgba(124,58,237,0.25)" }}
             >
               <p className="text-sm font-medium" style={{ color: "#7C3AED" }}>
-                Three of these numbers are overstating performance. One is grounded
-                in causal evidence. The problem is not having the data. It is knowing
-                which data to trust.
+                The problem isn't having the data. It's not having a principled way to
+                weigh it — and a system that turns that weight into a decision you can
+                defend in a board meeting.
               </p>
             </div>
           </div>
@@ -128,10 +129,10 @@ export default function Problem() {
               className="rounded-2xl p-6 reveal-on-scroll reveal-delay-5"
               style={{ background: "linear-gradient(135deg, rgba(124,58,237,0.08), rgba(79,70,229,0.08))", border: "1px solid rgba(124,58,237,0.15)" }}
             >
-              <p className="text-4xl font-bold mb-1" style={{ color: "#7C3AED" }}>62%</p>
+              <p className="text-4xl font-bold mb-1" style={{ color: "#7C3AED" }}>40–80%</p>
               <p className="text-sm" style={{ color: "#6B7280" }}>
-                of performance teams report making budget decisions they later discovered
-                were based on significantly overreported attribution data.
+                Typical platform overstatement of ROAS vs. causal iROAS from holdout-calibrated
+                measurement — across major paid channels.
               </p>
             </div>
           </div>

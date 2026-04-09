@@ -3,44 +3,81 @@ import { useScrollReveal } from "../ui/useScrollReveal";
 
 const rows = [
   {
-    feature: "Reconciles conflicting sources",
-    lens: true,  dash: false, mta: "partial", mmm: false,
+    feature: "Time to first decision",
+    lens: "Days",
+    legacy: "8–16 weeks",
+    saas: "Real-time",
+    better: "lens",
   },
   {
-    feature: "Confidence scoring per channel",
-    lens: true,  dash: false, mta: false,     mmm: false,
+    feature: "Model transparency",
+    lens: "Bayesian — full model cards",
+    legacy: "Proprietary — gated",
+    saas: "Black-box",
+    better: "lens",
   },
   {
-    feature: "Decision recommendation (scale / cut / test)",
-    lens: true,  dash: false, mta: false,     mmm: false,
+    feature: "Uncertainty quantification",
+    lens: "Native credible intervals",
+    legacy: "Unspecified / undocumented",
+    saas: "None",
+    better: "lens",
   },
   {
-    feature: "Incrementality-aware",
-    lens: true,  dash: false, mta: false,     mmm: "partial",
+    feature: "Causal validation",
+    lens: "Built into measurement loop",
+    legacy: "Separate engagement",
+    saas: "No",
+    better: "lens",
   },
   {
-    feature: "Works without a data science team",
-    lens: true,  dash: true,  mta: false,     mmm: false,
+    feature: "Experiment contamination check",
+    lens: true,
+    legacy: true,
+    saas: false,
+    better: "both",
   },
   {
-    feature: "Time to first insight",
-    lens: "< 1 hr", dash: "Real-time", mta: "Days", mmm: "4–8 weeks",
+    feature: "Always-on model updates",
+    lens: true,
+    legacy: "Quarterly",
+    saas: true,
+    better: "lens",
   },
   {
-    feature: "Flags attribution overlap",
-    lens: true,  dash: false, mta: "partial", mmm: false,
+    feature: "Audit trail + governance",
+    lens: true,
+    legacy: "Partial",
+    saas: false,
+    better: "lens",
   },
   {
-    feature: "Explains source disagreements",
-    lens: true,  dash: false, mta: false,     mmm: false,
+    feature: "Export format",
+    lens: "Excel · PPTX · API · Audit Pack",
+    legacy: "PDF reports",
+    saas: "Dashboard only",
+    better: "lens",
+  },
+  {
+    feature: "Prescriptive budget optimization",
+    lens: true,
+    legacy: true,
+    saas: false,
+    better: "both",
+  },
+  {
+    feature: "Pricing model",
+    lens: "SaaS — product-led",
+    legacy: "$150K+ engagement",
+    saas: "SaaS",
+    better: "lens",
   },
 ];
 
 const cols = [
-  { key: "lens", label: "MeasureLens", highlight: true  },
-  { key: "dash", label: "Dashboards",  highlight: false },
-  { key: "mta",  label: "MTA Tools",   highlight: false },
-  { key: "mmm",  label: "MMM",         highlight: false },
+  { key: "lens",   label: "LensOS",                      highlight: true  },
+  { key: "legacy", label: "Legacy Commercial Intel",     highlight: false },
+  { key: "saas",   label: "MMM / Attribution SaaS",      highlight: false },
 ];
 
 function Cell({ val, highlight }: { val: boolean | string; highlight: boolean }) {
@@ -65,14 +102,13 @@ function Cell({ val, highlight }: { val: boolean | string; highlight: boolean })
       </span>
     );
   }
-  if (val === "partial") {
+  if (val === "Partial" || val === "Quarterly") {
     return (
       <span className="text-xs font-mono px-2 py-0.5 rounded" style={{ color: "#FCD34D", background: "rgba(252,211,77,0.08)" }}>
-        Partial
+        {val}
       </span>
     );
   }
-  // string value
   return (
     <span
       className="text-xs font-mono font-semibold"
@@ -92,14 +128,15 @@ export default function Differentiation() {
 
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 reveal-on-scroll">
-          <div className="section-tag justify-center">Why Not Just Use What You Have</div>
+          <div className="section-tag justify-center">LensOS vs. The Alternatives</div>
           <h2 className="text-4xl lg:text-5xl font-bold tracking-tight text-white mb-5">
-            Every existing tool solves{" "}
-            <span className="gradient-text">half the problem.</span>
+            Same outcome.{" "}
+            <span className="gradient-text">Radically different path.</span>
           </h2>
           <p className="text-lg" style={{ color: "#6B7CB0" }}>
-            Dashboards show you data. MTA models guess at causality. MMM gets you closer,
-            but takes months. None of them reconcile conflicts or tell you what to do.
+            Legacy commercial intelligence platforms sell the right outcome — confident budget decisions.
+            They just take months, cost a small fortune, and give you a PDF you can't interrogate.
+            LensOS is the same outcome, productized.
           </p>
         </div>
 
@@ -111,7 +148,7 @@ export default function Differentiation() {
           {/* Column headers */}
           <div
             className="grid"
-            style={{ gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr", background: "rgba(255,255,255,0.02)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+            style={{ gridTemplateColumns: "2fr 1fr 1fr 1fr", background: "rgba(255,255,255,0.02)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}
           >
             <div className="px-6 py-4" />
             {cols.map((c) => (
@@ -144,7 +181,7 @@ export default function Differentiation() {
               key={row.feature}
               className={`grid items-center reveal-on-scroll reveal-delay-${(i % 4) + 1}`}
               style={{
-                gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr",
+                gridTemplateColumns: "2fr 1fr 1fr 1fr",
                 borderBottom: i < rows.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
               }}
             >
@@ -165,22 +202,19 @@ export default function Differentiation() {
         </div>
 
         {/* Competitor summary cards */}
-        <div className="grid md:grid-cols-3 gap-5 mt-10 reveal-on-scroll reveal-delay-4">
+        <div className="grid md:grid-cols-2 gap-5 mt-10 reveal-on-scroll reveal-delay-4">
           {[
             {
-              tool: "Dashboards",
-              verdict: "Show data, don't interpret it",
-              problem: "Looker, Tableau, and GA4 are great at surfacing numbers. They're not built to tell you which number is right, why sources conflict, or what to do next.",
+              tool: "Legacy Commercial Intelligence",
+              subtitle: "Analytic Partners, Nielsen, Ipsos",
+              verdict: "Powerful models. Opaque delivery.",
+              problem: "The incumbents invented commercial intelligence and deserve credit for it. But their output is a consulting deliverable — not a product. 16-week engagements, gated model specifications, and PDF reports don't meet the cadence of modern growth teams. You can't interrogate the model. You can't run a what-if at 2pm on a Tuesday.",
             },
             {
-              tool: "MTA Tools",
-              verdict: "Fragile models, no causal grounding",
-              problem: "Multi-touch attribution redistributes credit across touchpoints — but it's still based on observed correlation. It doesn't measure what would have happened without the ad.",
-            },
-            {
-              tool: "MMM",
-              verdict: "Powerful but slow and expensive",
-              problem: "Marketing Mix Models are the gold standard for causality, but a full engagement takes 6–12 weeks, costs $50K+, and goes stale quickly. Not viable for monthly decisions.",
+              tool: "MMM / Attribution SaaS",
+              subtitle: "Meridian, Northbeam, Triple Whale",
+              verdict: "Fast to deploy. Built for performance, not decisions.",
+              problem: "New-wave MMM tools democratized measurement and that's genuinely valuable. But most stop at measurement. They don't validate incrementality, don't run scenario planning across the full portfolio, and don't produce a defensible decision with a confidence interval behind it. A dashboard is not a decision.",
             },
           ].map((c) => (
             <div
@@ -188,11 +222,12 @@ export default function Differentiation() {
               className="glass-card rounded-xl p-6"
             >
               <p
-                className="text-xs font-mono font-bold mb-2 uppercase tracking-wider"
+                className="text-xs font-mono font-bold mb-0.5 uppercase tracking-wider"
                 style={{ color: "#6B7CB0" }}
               >
                 {c.tool}
               </p>
+              <p className="text-xs font-mono mb-3" style={{ color: "#4A5180" }}>{c.subtitle}</p>
               <p className="text-sm font-semibold text-white mb-3">{c.verdict}</p>
               <p className="text-sm leading-relaxed" style={{ color: "#6B7CB0" }}>{c.problem}</p>
             </div>

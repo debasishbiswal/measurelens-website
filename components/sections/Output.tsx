@@ -74,24 +74,25 @@ export default function Output() {
         {/* Header */}
         <div className="grid lg:grid-cols-2 gap-12 mb-16 items-end">
           <div className="reveal-on-scroll">
-            <div className="section-tag">What You Get</div>
+            <div className="section-tag">From Questions to Decisions</div>
             <h2 className="text-4xl lg:text-5xl font-bold tracking-tight text-white mb-5">
-              Not a chart.
+              Per-channel decisions.
               <br />
-              <span className="gradient-text">A decision.</span>
+              <span className="gradient-text">With evidence behind each one.</span>
             </h2>
             <p className="text-lg" style={{ color: "#6B7CB0" }}>
-              Every channel gets a true iROAS, a confidence score, and a clear action.
-              Scale. Cut. Test. No interpretation required.
+              Every channel gets a causal iROAS, a Measurement Confidence Score, and a clear
+              action. Scale. Cut. Hold. Run a test. Every recommendation includes
+              the evidence — and what would change it.
             </p>
           </div>
 
           {/* Summary stats */}
           <div className="grid grid-cols-3 gap-4 reveal-on-scroll reveal-delay-2">
             {[
-              { label: "Avg. platform overreport", value: "38%", color: "#F87171" },
-              { label: "True blended iROAS",        value: "2.6×",  color: "#A78BFA" },
-              { label: "Budget to reallocate",      value: "$24K",  color: "#34D399" },
+              { label: "Avg. platform overstatement", value: "38%", color: "#F87171" },
+              { label: "True blended iROAS",           value: "2.6×", color: "#A78BFA" },
+              { label: "Budget to reallocate",         value: "$24K", color: "#34D399" },
             ].map((s) => (
               <div
                 key={s.label}

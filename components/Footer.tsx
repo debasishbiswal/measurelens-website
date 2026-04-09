@@ -7,8 +7,8 @@ export default function Footer() {
 
   const links: Record<string, { label: string; href: string }[]> = {
     Product: [
-      { label: "How it works",  href: "/#how-it-works" },
-      { label: "LensOS",        href: "/lensos" },
+      { label: "Platform",      href: "/#lensos" },
+      { label: "Methodology",   href: "/#how-it-works" },
       { label: "Pricing",       href: "/pricing" },
       { label: "Insights",      href: "/insights" },
     ],
@@ -59,8 +59,8 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-sm leading-relaxed mb-5" style={{ color: "#6B7CB0", maxWidth: 280 }}>
-              Marketing measurement intelligence that tells you what is real.
-              Built for teams tired of picking the number that sounds most defensible.
+              The AI-native commercial intelligence platform for enterprise growth teams.
+              Bayesian measurement, causal validation, and prescriptive optimization — in one always-on decisioning loop.
             </p>
             <div className="flex items-center gap-2">
               <span
