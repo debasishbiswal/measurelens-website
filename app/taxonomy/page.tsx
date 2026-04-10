@@ -5,7 +5,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-/* ── Design tokens (match globals.css) ── */
+/* ── Design tokens ── */
 const C = {
   bg:       "#06060F",
   bg2:      "#0C0C1E",
@@ -18,10 +18,29 @@ const C = {
   line:     "#1C1C3A",
 };
 
-/* ── Full 485-node LensOS Channel Taxonomy v1.0 ── */
+/* ── Shared icon helper ── */
+function Icon({ paths, color, size = 20 }: { paths: string[]; color: string; size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {paths.map((d, i) => <path key={i} d={d} />)}
+    </svg>
+  );
+}
+
+/* ── Taxonomy with functional icon renderers ── */
 const TAXONOMY = [
   {
-    id: "L1-001", name: "Paid Media", icon: "💸", color: "#7C3AED",
+    id: "L1-001", name: "Paid Media", color: "#7C3AED",
+    iconPaths: ["M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"],
     l2Count: 10, l3Count: 102,
     tagline: "Every major paid channel — search, social, display, CTV, retail media and more",
     channels: [
@@ -38,7 +57,8 @@ const TAXONOMY = [
     ],
   },
   {
-    id: "L1-002", name: "Traditional Media", icon: "📺", color: "#4F46E5",
+    id: "L1-002", name: "Traditional Media", color: "#4F46E5",
+    iconPaths: ["M4 4h16a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z", "M8 4V2M16 4V2M2 9h20M12 18v2M9 20h6"],
     l2Count: 6, l3Count: 33,
     tagline: "TV, radio, print, OOH, direct mail — measured alongside digital",
     channels: [
@@ -51,7 +71,8 @@ const TAXONOMY = [
     ],
   },
   {
-    id: "L1-003", name: "Owned Channels", icon: "🏠", color: "#059669",
+    id: "L1-003", name: "Owned Channels", color: "#059669",
+    iconPaths: ["M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z", "M9 21V12h6v9"],
     l2Count: 7, l3Count: 31,
     tagline: "Email, SMS, push, website, app, loyalty — the channels you control",
     channels: [
@@ -65,7 +86,8 @@ const TAXONOMY = [
     ],
   },
   {
-    id: "L1-004", name: "Earned & Organic", icon: "🌱", color: "#D97706",
+    id: "L1-004", name: "Earned & Organic", color: "#D97706",
+    iconPaths: ["M22 7L13.5 15.5 8.5 10.5 2 17", "M16 7h6v6"],
     l2Count: 6, l3Count: 35,
     tagline: "SEO, PR, organic social, reviews, community — signals money cannot buy",
     channels: [
@@ -78,7 +100,8 @@ const TAXONOMY = [
     ],
   },
   {
-    id: "L1-005", name: "Partner & Performance Marketing", icon: "🤝", color: "#DB2777",
+    id: "L1-005", name: "Partner & Performance Marketing", color: "#DB2777",
+    iconPaths: ["M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100 8 4 4 0 000-8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"],
     l2Count: 6, l3Count: 35,
     tagline: "Affiliate, influencer, referral, sponsorships — the performance layer",
     channels: [
@@ -91,7 +114,8 @@ const TAXONOMY = [
     ],
   },
   {
-    id: "L1-006", name: "Offline & Field Marketing", icon: "🎪", color: "#0891B2",
+    id: "L1-006", name: "Offline & Field Marketing", color: "#0891B2",
+    iconPaths: ["M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z", "M12 10a3 3 0 100-6 3 3 0 000 6z"],
     l2Count: 5, l3Count: 21,
     tagline: "Events, experiential, in-store, field sales — the physical touchpoints",
     channels: [
@@ -103,7 +127,8 @@ const TAXONOMY = [
     ],
   },
   {
-    id: "L1-007", name: "Emerging & Next-Gen Channels", icon: "🚀", color: "#7C3AED",
+    id: "L1-007", name: "Emerging & Next-Gen Channels", color: "#7C3AED",
+    iconPaths: ["M13 2L3 14h9l-1 8 10-12h-9l1-8z"],
     l2Count: 7, l3Count: 28,
     tagline: "AI search ads, social commerce, AR, metaverse, voice — built for what is next",
     channels: [
@@ -117,7 +142,8 @@ const TAXONOMY = [
     ],
   },
   {
-    id: "L1-008", name: "B2B Demand Generation", icon: "🏢", color: "#4F46E5",
+    id: "L1-008", name: "B2B Demand Generation", color: "#4F46E5",
+    iconPaths: ["M3 21h18M3 7v1a3 3 0 006 0V7m0 1a3 3 0 006 0V7m0 1a3 3 0 006 0V7H3l2-4h14l2 4z", "M5 21V10.85M19 21V10.85"],
     l2Count: 3, l3Count: 15,
     tagline: "ABM, SDR programs, content syndication — built for complex sales cycles",
     channels: [
@@ -137,13 +163,38 @@ const FUNNEL_STAGES = [
   { name: "Acquisition",   color: "#F87171", desc: "Growth & new user acquisition" },
 ];
 
+/* WHY_CARDS with SVG icon paths instead of emojis */
 const WHY_CARDS = [
-  { icon: "🗂️", title: "Four levels deep", body: "L1 to L2 to L3 to L4. Every node knows its parent — lineage-aware findings tell you not just what you are missing but where in your funnel it hurts." },
-  { icon: "🎯", title: "Funnel stage on every node", body: "Each channel is tagged with the funnel stages it serves. Awareness channels score differently from Conversion channels — your audit reflects that weighting." },
-  { icon: "📡", title: "Delivery surface scoring", body: "Digital channels are measurable with pixels. Traditional and Offline channels are not. The taxonomy encodes that reality so your score is calibrated against what is actually trackable." },
-  { icon: "🏭", title: "Industry overlays", body: "Retail media for e-commerce, compliance channels for financial services, prescription tracking for healthcare. Industry context on top of the universal hierarchy." },
-  { icon: "🔮", title: "Built for what is next", body: "AI search ads, TikTok Shop, AR filters, metaverse placements — the Emerging channel family is first-class, not an afterthought." },
-  { icon: "🔗", title: "Machine-readable by design", body: "Every node has a stable ID. Audit findings reference taxonomy IDs directly, enabling coverage dashboards and auto-generated media plans." },
+  {
+    paths: ["M12 2L2 7l10 5 10-5-10-5z", "M2 17l10 5 10-5", "M2 12l10 5 10-5"],
+    title: "Four levels deep",
+    body: "L1 to L2 to L3 to L4. Every node knows its parent — lineage-aware findings tell you not just what you are missing but where in your funnel it hurts.",
+  },
+  {
+    paths: ["M4 20V10a8 8 0 0116 0v10", "M4 20h16", "M12 4v4"],
+    title: "Funnel stage on every node",
+    body: "Each channel is tagged with the funnel stages it serves. Awareness channels score differently from Conversion channels — your audit reflects that weighting.",
+  },
+  {
+    paths: ["M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"],
+    title: "Delivery surface scoring",
+    body: "Digital channels are measurable with pixels. Traditional and Offline channels are not. The taxonomy encodes that reality so your score is calibrated against what is actually trackable.",
+  },
+  {
+    paths: ["M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"],
+    title: "Industry overlays",
+    body: "Retail media for e-commerce, compliance channels for financial services, prescription tracking for healthcare. Industry context on top of the universal hierarchy.",
+  },
+  {
+    paths: ["M12 3l1.88 5.79a1 1 0 00.95.69h6.09l-4.92 3.57a1 1 0 00-.36 1.12L17.52 20l-4.92-3.57a1 1 0 00-1.18 0L6.5 20l1.88-5.83a1 1 0 00-.36-1.12L3.1 9.48h6.09a1 1 0 00.95-.69L12 3z"],
+    title: "Built for what is next",
+    body: "AI search ads, TikTok Shop, AR filters, metaverse placements — the Emerging channel family is first-class, not an afterthought.",
+  },
+  {
+    paths: ["M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71", "M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"],
+    title: "Machine-readable by design",
+    body: "Every node has a stable ID. Audit findings reference taxonomy IDs directly, enabling coverage dashboards and auto-generated media plans.",
+  },
 ];
 
 /* ── Sub-components ── */
@@ -183,8 +234,6 @@ export default function TaxonomyPage() {
 
   return (
     <div style={{ background: C.bg, minHeight: "100vh", fontFamily: "Inter, system-ui, sans-serif", color: C.text }}>
-
-      {/* Marketing site Navbar */}
       <Navbar />
 
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "100px 32px 48px" }}>
@@ -246,9 +295,17 @@ export default function TaxonomyPage() {
               <div key={card.title} style={{
                 background: C.bg + "80", border: "1px solid " + C.line, borderRadius: 14, padding: "24px",
               }}>
-                <div style={{ fontSize: 28, marginBottom: 12 }}>{card.icon}</div>
-                <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 8 }}>{card.title}</div>
-                <div style={{ fontSize: 14, color: C.muted, lineHeight: 1.65 }}>{card.body}</div>
+                {/* SVG icon container */}
+                <div style={{
+                  width: 40, height: 40, borderRadius: 10,
+                  background: C.violet + "15", border: "1px solid " + C.violet + "25",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  marginBottom: 14,
+                }}>
+                  <Icon paths={card.paths} color={C.violetLt} size={18} />
+                </div>
+                <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 8 }}>{card.title}</div>
+                <div style={{ fontSize: 13.5, color: C.muted, lineHeight: 1.65 }}>{card.body}</div>
               </div>
             ))}
           </div>
@@ -264,13 +321,13 @@ export default function TaxonomyPage() {
             {FUNNEL_STAGES.map((s) => (
               <div key={s.name} style={{
                 background: C.bg2, border: "1px solid " + s.color + "40",
-                borderRadius: 12, padding: "16px 22px",
+                borderRadius: 12, padding: "14px 20px",
                 display: "flex", alignItems: "center", gap: 12,
               }}>
-                <div style={{ width: 10, height: 10, borderRadius: "50%", background: s.color, flexShrink: 0 }} />
+                <div style={{ width: 8, height: 8, borderRadius: "50%", background: s.color, flexShrink: 0 }} />
                 <div>
-                  <div style={{ fontWeight: 700, fontSize: 14, color: s.color }}>{s.name}</div>
-                  <div style={{ fontSize: 12, color: C.muted, marginTop: 2 }}>{s.desc}</div>
+                  <div style={{ fontWeight: 700, fontSize: 13, color: s.color }}>{s.name}</div>
+                  <div style={{ fontSize: 11.5, color: C.muted, marginTop: 2 }}>{s.desc}</div>
                 </div>
               </div>
             ))}
@@ -297,29 +354,39 @@ export default function TaxonomyPage() {
                     onClick={() => setExpanded(isOpen ? null : l1.id)}
                     style={{
                       width: "100%", background: "none", border: "none", cursor: "pointer",
-                      padding: "20px 24px", display: "flex", alignItems: "center", gap: 16,
+                      padding: "18px 24px", display: "flex", alignItems: "center", gap: 16,
                       textAlign: "left",
                     }}
                   >
-                    <span style={{ fontSize: 26, flexShrink: 0 }}>{l1.icon}</span>
+                    {/* SVG icon in a small accent circle */}
+                    <div style={{
+                      width: 38, height: 38, borderRadius: 10, flexShrink: 0,
+                      background: l1.color + "18", border: "1px solid " + l1.color + "35",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                    }}>
+                      <Icon paths={l1.iconPaths} color={l1.color} size={18} />
+                    </div>
+
                     <div style={{ flex: 1 }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 3 }}>
                         <span style={{
-                          fontSize: 11, fontWeight: 700, color: l1.color,
+                          fontSize: 10, fontWeight: 700, color: l1.color,
                           background: l1.color + "20", borderRadius: 4, padding: "2px 7px",
+                          fontFamily: "JetBrains Mono, monospace",
                         }}>{l1.id}</span>
-                        <span style={{ fontSize: 17, fontWeight: 700, color: C.text }}>{l1.name}</span>
+                        <span style={{ fontSize: 16, fontWeight: 700, color: C.text }}>{l1.name}</span>
                       </div>
                       <span style={{ fontSize: 13, color: C.muted }}>{l1.tagline}</span>
                     </div>
+
                     <div style={{ display: "flex", gap: 20, alignItems: "center", flexShrink: 0 }}>
                       <div style={{ textAlign: "center" }}>
-                        <div style={{ fontSize: 18, fontWeight: 800, color: l1.color }}>{l1.l2Count}</div>
-                        <div style={{ fontSize: 10, color: C.muted }}>Sub-cats</div>
+                        <div style={{ fontSize: 17, fontWeight: 800, color: l1.color }}>{l1.l2Count}</div>
+                        <div style={{ fontSize: 9.5, color: C.muted }}>Sub-cats</div>
                       </div>
                       <div style={{ textAlign: "center" }}>
-                        <div style={{ fontSize: 18, fontWeight: 800, color: C.violetLt }}>{l1.l3Count}</div>
-                        <div style={{ fontSize: 10, color: C.muted }}>Platforms</div>
+                        <div style={{ fontSize: 17, fontWeight: 800, color: C.violetLt }}>{l1.l3Count}</div>
+                        <div style={{ fontSize: 9.5, color: C.muted }}>Platforms</div>
                       </div>
                       <svg
                         width="16" height="16" viewBox="0 0 16 16" fill="none"
@@ -351,15 +418,15 @@ export default function TaxonomyPage() {
                               justifyContent: "space-between", gap: 8, marginBottom: 8,
                             }}>
                               <div>
-                                <span style={{ fontSize: 10, color: C.muted, fontWeight: 600, marginRight: 6 }}>{l2.id}</span>
+                                <span style={{ fontSize: 10, color: C.muted, fontWeight: 600, marginRight: 6, fontFamily: "JetBrains Mono, monospace" }}>{l2.id}</span>
                                 <span style={{ fontSize: 14, fontWeight: 600, color: C.text }}>{l2.name}</span>
                               </div>
                               <span style={{
-                                fontSize: 11, color: C.violetLt, background: C.violet + "20",
+                                fontSize: 10, color: C.violetLt, background: C.violet + "20",
                                 borderRadius: 4, padding: "2px 7px", flexShrink: 0, fontWeight: 600,
-                              }}>{l2.l3} channels</span>
+                              }}>{l2.l3} ch.</span>
                             </div>
-                            <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 6 }}>
+                            <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 5 }}>
                               {l2.funnel.map((f) => <FunnelBadge key={f} stage={f} />)}
                             </div>
                             <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
