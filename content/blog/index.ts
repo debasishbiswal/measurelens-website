@@ -13,9 +13,11 @@
 import type { BlogPost } from "./schema";
 
 import whyROASNumbersDontAgree from "./posts/why-roas-numbers-dont-agree";
+import lightweightMMMFuture from "./posts/lightweight-mmm-future";
 
 // ── Add new posts at the TOP (newest first) ───────────────────
 export const posts: BlogPost[] = [
+  lightweightMMMFuture,
   whyROASNumbersDontAgree,
 ];
 
