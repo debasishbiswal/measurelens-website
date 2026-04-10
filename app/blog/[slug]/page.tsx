@@ -7,8 +7,14 @@ import { formatDate } from "@/lib/blog";
 import type { ContentBlock } from "@/content/blog/schema";
 
 // ── Static params for pre-rendering ──────────────────────────
+// Slugs with a dedicated page under /app/blog/<slug>/page.tsx
+// are excluded here so the static route wins without conflict.
+const DEDICATED_PAGES = ["lightweight-mmm-future"];
+
 export function generateStaticParams() {
-  return getAllPostSlugs().map((slug) => ({ slug }));
+  return getAllPostSlugs()
+    .filter((slug) => !DEDICATED_PAGES.includes(slug))
+    .map((slug) => ({ slug }));
 }
 
 // ── SEO metadata ─────────────────────────────────────────────
