@@ -2,301 +2,200 @@
 
 import { useEffect, useRef, useState } from "react";
 
-/* ─────────────────────────────────────────────
-   Architecture blocks: Data → Decision Intelligence
-   ───────────────────────────────────────────── */
-const BLOCKS = [
+/* ─── Measurement conflict data ─────────────────────────────── */
+const SOURCES = [
   {
-    id: "A",
-    label: "Data Ingestion",
-    tagline: "Every signal, every channel",
-    description:
-      "Connects to paid, owned, and earned data sources automatically — ad platforms, CRM, analytics, and attribution tools — without manual exports or brittle spreadsheets.",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <rect x="2" y="8" width="7" height="12" rx="2" stroke="currentColor" strokeWidth="1.8" fill="none"/>
-        <rect x="10.5" y="4" width="7" height="20" rx="2" stroke="currentColor" strokeWidth="1.8" fill="none"/>
-        <rect x="19" y="10" width="7" height="8" rx="2" stroke="currentColor" strokeWidth="1.8" fill="none"/>
-        <path d="M5.5 20v3M14 24v-3M22.5 18v3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-      </svg>
-    ),
-    color: "#818CF8",
-    bgGlow: "rgba(129,140,248,0.07)",
-    pills: ["Meta Ads", "Google Ads", "GA4", "Klaviyo", "+40 more"],
+    source: "Platform Analytics",
+    value: "4.7x",
+    label: "ROAS (self-reported)",
+    color: "#F87171",
+    note: "Excludes view-through overlap",
   },
   {
-    id: "B",
-    label: "AI Data Interpreter",
-    tagline: "Clean, unified, trustworthy",
-    description:
-      "A large language model layer inspects every incoming data stream, flags anomalies, resolves naming conflicts, and standardizes metrics — so downstream analysis isn't poisoned by bad data.",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <circle cx="14" cy="14" r="6" stroke="currentColor" strokeWidth="1.8" fill="none"/>
-        <path d="M14 2v4M14 22v4M2 14h4M22 14h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-        <circle cx="14" cy="14" r="2.5" fill="currentColor"/>
-        <path d="M6.1 6.1l2.8 2.8M19.1 19.1l2.8 2.8M19.1 8.9l-2.8 2.8M8.9 19.1l-2.8 2.8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-      </svg>
-    ),
-    color: "#A78BFA",
-    bgGlow: "rgba(167,139,250,0.07)",
-    pills: ["Anomaly Detection", "Metric Harmonisation", "LLM QA Layer"],
+    source: "GA4 Last-Click",
+    value: "1.3x",
+    label: "ROAS (attributed)",
+    color: "#FBBF24",
+    note: "Misses upper-funnel contribution",
   },
   {
-    id: "C",
-    label: "Taxonomy Standardisation",
-    tagline: "485-node channel hierarchy",
-    description:
-      "Every signal is mapped to a universal channel taxonomy — 8 L1 tiers, 50 L2 channels, 300+ L3 tactics — giving every metric a consistent address regardless of source platform.",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <circle cx="14" cy="5" r="3" stroke="currentColor" strokeWidth="1.8" fill="none"/>
-        <circle cx="6" cy="20" r="3" stroke="currentColor" strokeWidth="1.8" fill="none"/>
-        <circle cx="14" cy="20" r="3" stroke="currentColor" strokeWidth="1.8" fill="none"/>
-        <circle cx="22" cy="20" r="3" stroke="currentColor" strokeWidth="1.8" fill="none"/>
-        <path d="M14 8v6M14 14L6 17M14 14l8 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-      </svg>
-    ),
-    color: "#7C3AED",
-    bgGlow: "rgba(124,58,237,0.10)",
-    pills: ["L1→L4 Hierarchy", "Funnel Mapping", "485 Nodes"],
+    source: "Multi-Touch Model",
+    value: "0.8x",
+    label: "ROAS (data-driven)",
+    color: "#FBBF24",
+    note: "No causal identification",
   },
   {
-    id: "D",
-    label: "MMM / Genome Engine",
-    tagline: "Causal attribution at scale",
-    description:
-      "Bayesian Media Mix Modelling and Genome attribution run continuously on your standardised data — isolating the true incremental contribution of every channel, controlling for saturation and external lift.",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <path d="M4 22L8 14l4 6 5-10 4 6 3-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-        <circle cx="8" cy="14" r="2" fill="currentColor"/>
-        <circle cx="17" cy="10" r="2" fill="currentColor"/>
-        <circle cx="24" cy="14" r="2" fill="currentColor"/>
-      </svg>
-    ),
-    color: "#06B6D4",
-    bgGlow: "rgba(6,182,212,0.07)",
-    pills: ["Bayesian MMM", "Genome Attribution", "Saturation Curves"],
-  },
-  {
-    id: "E",
-    label: "Decision Intelligence Agents",
-    tagline: "AI that thinks, not just reports",
-    description:
-      "Autonomous agents run budget simulations, surface cross-channel conflicts, and generate scenario forecasts — translating model outputs into specific, evidence-backed recommendations your team can act on.",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <rect x="8" y="3" width="12" height="16" rx="3" stroke="currentColor" strokeWidth="1.8" fill="none"/>
-        <path d="M11 7h6M11 10h4M11 13h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-        <path d="M10 19v4l4-2 4 2v-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-      </svg>
-    ),
-    color: "#10B981",
-    bgGlow: "rgba(16,185,129,0.07)",
-    pills: ["Budget Simulation", "Scenario Forecasting", "Conflict Detection"],
-  },
-  {
-    id: "F",
-    label: "Executive Outputs",
-    tagline: "Decisions, not dashboards",
-    description:
-      "Leaders receive channel-level budget decisions with confidence scores, the evidence trail behind every recommendation, and natural-language explanations that remove interpretation from the critical path.",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <path d="M6 24h16M14 4v16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-        <path d="M8 14l6-6 6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-        <circle cx="20" cy="8" r="4" fill="rgba(16,185,129,0.18)" stroke="#10B981" strokeWidth="1.5"/>
-        <path d="M18.5 8l1 1 2-2" stroke="#10B981" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
-      </svg>
-    ),
-    color: "#F59E0B",
-    bgGlow: "rgba(245,158,11,0.07)",
-    pills: ["Confidence Scores", "Evidence Trail", "NL Explanations"],
+    source: "Media Mix Model",
+    value: "2.1x",
+    label: "iROAS (uncalibrated)",
+    color: "#6B7CB0",
+    note: "No holdout validation",
   },
 ];
 
-/* Connector arrow between blocks */
-function Arrow({ vertical }: { vertical?: boolean }) {
-  if (vertical) {
-    return (
-      <div
-        className="flex items-center justify-center"
-        style={{ height: 32, width: "100%" }}
-      >
-        <div
-          style={{
-            width: 1,
-            height: 28,
-            background: "linear-gradient(to bottom, rgba(124,58,237,0.5), rgba(124,58,237,0.1))",
-          }}
-        />
-      </div>
-    );
-  }
-  return (
-    <div
-      className="hidden lg:flex items-center justify-center flex-shrink-0"
-      style={{ width: 44 }}
-    >
-      <svg width="44" height="16" viewBox="0 0 44 16" fill="none">
-        <path
-          d="M2 8h36M34 4l6 4-6 4"
-          stroke="rgba(124,58,237,0.55)"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    </div>
-  );
-}
+/* ─── Orbital nodes ──────────────────────────────────────────── */
+const NODES = [
+  {
+    id: "measure",
+    label: "Measure",
+    sublabel: "Causal Attribution",
+    detail: "Bayesian MMM isolates true incremental contribution per channel, controlling for saturation, carryover, and external lift. Every coefficient has a credible interval.",
+    color: "#7C3AED",
+    iconPath: "M3 3v18h18M7 17V13M11 17V9M15 17V5M19 17v-3",
+    pos: "top" as const,
+  },
+  {
+    id: "validate",
+    label: "Validate",
+    sublabel: "Geo Experiments",
+    detail: "Holdout geo tests and BSTS-based synthetic controls confirm incremental lift. Contamination scoring flags experiments that can't be trusted at scale.",
+    color: "#4F46E5",
+    iconPath: "M9 12l2 2 4-4M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z",
+    pos: "right" as const,
+  },
+  {
+    id: "simulate",
+    label: "Simulate",
+    sublabel: "Scenario Modeling",
+    detail: "What-if simulation runs portfolio-level budget scenarios against calibrated response curves. Every forecast carries a credible interval — not a point estimate.",
+    color: "#0891B2",
+    iconPath: "M2 2l20 20M8 8C5 9.5 3 12 3 15a9 9 0 0018 0c0-3-2-5.5-5-7M12 3v4",
+    pos: "bottom" as const,
+  },
+  {
+    id: "decide",
+    label: "Decide",
+    sublabel: "Prescriptive Output",
+    detail: "Constrained multi-KPI optimization produces specific channel allocations with confidence scores and the experiment briefs needed to upgrade them next cycle.",
+    color: "#059669",
+    iconPath: "M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5",
+    pos: "left" as const,
+  },
+];
 
-/* Single architecture block card */
-function ArchBlock({
-  block,
-  index,
-  visible,
+/* ─── Node card component ─────────────────────────────────────── */
+function OrbitalNode({
+  node,
+  active,
+  onHover,
 }: {
-  block: (typeof BLOCKS)[0];
-  index: number;
-  visible: boolean;
+  node: (typeof NODES)[0];
+  active: boolean;
+  onHover: (id: string | null) => void;
 }) {
-  const [hovered, setHovered] = useState(false);
-
-  const delay = index * 80;
+  const posStyle: React.CSSProperties =
+    node.pos === "top"
+      ? { top: 0, left: "50%", transform: "translate(-50%, 0)" }
+      : node.pos === "right"
+      ? { top: "50%", right: 0, transform: "translate(0, -50%)" }
+      : node.pos === "bottom"
+      ? { bottom: 0, left: "50%", transform: "translate(-50%, 0)" }
+      : { top: "50%", left: 0, transform: "translate(0, -50%)" };
 
   return (
     <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={() => onHover(node.id)}
+      onMouseLeave={() => onHover(null)}
       style={{
-        flex: "1 1 0",
-        minWidth: 0,
-        background: hovered
-          ? "rgba(255,255,255,0.042)"
-          : "rgba(255,255,255,0.025)",
-        border: hovered
-          ? "1px solid " + block.color + "55"
-          : "1px solid rgba(255,255,255,0.07)",
-        borderRadius: 16,
-        padding: "22px 20px",
+        position: "absolute",
+        ...posStyle,
+        width: 130,
+        zIndex: 10,
         cursor: "default",
-        transition: "all 0.25s ease",
-        boxShadow: hovered ? "0 0 32px " + block.bgGlow : "none",
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(24px)",
-        transitionDelay: delay + "ms",
-        position: "relative",
-        overflow: "hidden",
       }}
     >
-      {/* Glow orb top-right */}
+      {/* Connector dot */}
       <div
         style={{
           position: "absolute",
-          top: -20,
-          right: -20,
-          width: 80,
-          height: 80,
+          width: 10,
+          height: 10,
           borderRadius: "50%",
-          background: block.bgGlow,
-          filter: "blur(20px)",
-          pointerEvents: "none",
-          opacity: hovered ? 1 : 0.4,
-          transition: "opacity 0.3s ease",
+          background: node.color,
+          boxShadow: "0 0 12px " + node.color,
+          ...(node.pos === "top"
+            ? { bottom: -5, left: "50%", transform: "translateX(-50%)" }
+            : node.pos === "right"
+            ? { left: -5, top: "50%", transform: "translateY(-50%)" }
+            : node.pos === "bottom"
+            ? { top: -5, left: "50%", transform: "translateX(-50%)" }
+            : { right: -5, top: "50%", transform: "translateY(-50%)" }),
         }}
       />
 
-      {/* Step badge + icon row */}
+      {/* Card */}
       <div
         style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: 14,
+          background: active ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.03)",
+          border: "1px solid " + (active ? node.color + "70" : "rgba(255,255,255,0.08)"),
+          borderRadius: 12,
+          padding: active ? "14px 14px 16px" : "12px 14px",
+          textAlign: node.pos === "left" ? "right" : node.pos === "right" ? "left" : "center",
+          transition: "all 0.25s ease",
+          boxShadow: active ? "0 0 28px " + node.color + "22" : "none",
         }}
       >
-        <span
+        <div
           style={{
-            fontSize: 10,
-            fontWeight: 700,
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            color: block.color,
-            background: block.color + "18",
-            border: "1px solid " + block.color + "35",
-            borderRadius: 6,
-            padding: "3px 8px",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent:
+              node.pos === "left"
+                ? "flex-end"
+                : node.pos === "right"
+                ? "flex-start"
+                : "center",
+            marginBottom: 6,
           }}
         >
-          Step {block.id}
-        </span>
-        <span style={{ color: block.color, opacity: 0.85 }}>{block.icon}</span>
-      </div>
-
-      {/* Label & tagline */}
-      <div style={{ marginBottom: 10 }}>
-        <h3
+          <svg
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke={node.color}
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d={node.iconPath} />
+          </svg>
+        </div>
+        <div
           style={{
-            fontSize: 15,
+            fontSize: 13,
             fontWeight: 700,
             color: "#E8EEFF",
-            margin: 0,
-            lineHeight: 1.3,
+            letterSpacing: "0.01em",
+            marginBottom: 2,
           }}
         >
-          {block.label}
-        </h3>
-        <p
-          style={{
-            fontSize: 11,
-            color: block.color,
-            margin: "3px 0 0",
-            fontWeight: 500,
-          }}
-        >
-          {block.tagline}
-        </p>
-      </div>
-
-      {/* Description */}
-      <p
-        style={{
-          fontSize: 12.5,
-          lineHeight: 1.65,
-          color: "#8892B4",
-          margin: "0 0 14px",
-        }}
-      >
-        {block.description}
-      </p>
-
-      {/* Pills */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
-        {block.pills.map((pill) => (
-          <span
-            key={pill}
+          {node.label}
+        </div>
+        <div style={{ fontSize: 10, color: node.color, fontWeight: 600, marginBottom: active ? 8 : 0 }}>
+          {node.sublabel}
+        </div>
+        {active && (
+          <div
             style={{
-              fontSize: 10.5,
-              color: "#8892B4",
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: 5,
-              padding: "2.5px 7px",
-              fontWeight: 500,
+              fontSize: 11,
+              color: "#6B7CB0",
+              lineHeight: 1.55,
             }}
           >
-            {pill}
-          </span>
-        ))}
+            {node.detail}
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
+/* ─── Main section ───────────────────────────────────────────── */
 export default function ProductArchitecture() {
   const [visible, setVisible] = useState(false);
+  const [activeNode, setActiveNode] = useState<string | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -309,7 +208,7 @@ export default function ProductArchitecture() {
           obs.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.08 }
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -320,35 +219,62 @@ export default function ProductArchitecture() {
       ref={sectionRef}
       id="architecture"
       style={{
-        padding: "100px 0 80px",
-        background: "rgba(6,6,15,1)",
+        background: "#06060F",
+        padding: "96px 0 80px",
         position: "relative",
         overflow: "hidden",
       }}
     >
-      {/* Background grid */}
+      {/* CSS keyframes injected once */}
+      <style>{`
+        @keyframes orbit-spin {
+          from { stroke-dashoffset: 0; }
+          to   { stroke-dashoffset: -1010; }
+        }
+        @keyframes arc-travel-1 {
+          0%   { stroke-dashoffset: 260; }
+          100% { stroke-dashoffset: 0; }
+        }
+        @keyframes center-pulse {
+          0%, 100% { opacity: 0.25; transform: scale(1); }
+          50%       { opacity: 0.55; transform: scale(1.08); }
+        }
+        @keyframes node-entry {
+          from { opacity: 0; transform: scale(0.7); }
+          to   { opacity: 1; transform: scale(1); }
+        }
+        @keyframes conflict-slide {
+          from { opacity: 0; transform: translateY(16px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+
+      {/* Subtle grid */}
       <div
+        aria-hidden="true"
         style={{
           position: "absolute",
           inset: 0,
           backgroundImage:
-            "linear-gradient(rgba(124,58,237,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
+            "linear-gradient(rgba(124,58,237,0.035) 1px, transparent 1px)," +
+            "linear-gradient(90deg, rgba(124,58,237,0.035) 1px, transparent 1px)",
+          backgroundSize: "72px 72px",
           pointerEvents: "none",
         }}
       />
 
-      {/* Radial glow centre */}
+      {/* Radial ambient glow */}
       <div
+        aria-hidden="true"
         style={{
           position: "absolute",
-          top: "30%",
+          top: "40%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: 800,
-          height: 400,
+          width: 900,
+          height: 500,
           background:
-            "radial-gradient(ellipse at center, rgba(124,58,237,0.08) 0%, transparent 70%)",
+            "radial-gradient(ellipse at center, rgba(124,58,237,0.07) 0%, transparent 65%)",
           pointerEvents: "none",
         }}
       />
@@ -357,14 +283,15 @@ export default function ProductArchitecture() {
         className="max-w-7xl mx-auto px-6 lg:px-8"
         style={{ position: "relative" }}
       >
-        {/* Header */}
+        {/* ── Section header ────────────────────────────────── */}
         <div
           style={{
             textAlign: "center",
-            marginBottom: 60,
+            maxWidth: 720,
+            margin: "0 auto 64px",
             opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0)" : "translateY(20px)",
-            transition: "all 0.6s ease",
+            transform: visible ? "translateY(0)" : "translateY(24px)",
+            transition: "opacity 0.7s ease, transform 0.7s ease",
           }}
         >
           <span
@@ -379,177 +306,724 @@ export default function ProductArchitecture() {
               border: "1px solid rgba(124,58,237,0.25)",
               borderRadius: 8,
               padding: "5px 14px",
-              marginBottom: 18,
+              marginBottom: 22,
             }}
           >
-            Product Architecture
+            Decision Intelligence Engine
           </span>
 
           <h2
             style={{
-              fontSize: "clamp(28px, 4vw, 46px)",
+              fontSize: "clamp(30px, 4.5vw, 52px)",
               fontWeight: 800,
-              lineHeight: 1.15,
-              margin: "0 auto 16px",
-              maxWidth: 700,
+              lineHeight: 1.12,
+              margin: "0 0 18px",
+              color: "#E8EEFF",
             }}
           >
-            <span style={{ color: "#E8EEFF" }}>From Data to </span>
+            One budget.{" "}
             <span
               style={{
-                background:
-                  "linear-gradient(135deg, #A78BFA 0%, #7C3AED 50%, #06B6D4 100%)",
+                background: "linear-gradient(135deg, #F87171 0%, #FBBF24 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
               }}
             >
-              Decision Intelligence
+              Four truths.
+            </span>
+            <br />
+            <span
+              style={{
+                background: "linear-gradient(135deg, #A78BFA 0%, #60A5FA 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              One defensible decision.
             </span>
           </h2>
 
           <p
             style={{
               fontSize: 16,
-              lineHeight: 1.7,
+              lineHeight: 1.75,
               color: "#6B7CB0",
-              maxWidth: 620,
+              maxWidth: 600,
               margin: "0 auto",
             }}
           >
-            Six integrated layers transform raw marketing signals into specific,
-            evidence-backed budget decisions — automatically, continuously, at
-            enterprise scale.
+            Four measurement systems are running on your data right now — and each one
+            returns a different number for the same channel. LensOS is the only system
+            built to reconcile them into a single, evidence-backed portfolio decision.
           </p>
         </div>
 
-        {/* ── Row 1: A → B → C ── */}
+        {/* ── Conflict strip ────────────────────────────────── */}
         <div
           style={{
-            display: "flex",
-            alignItems: "stretch",
-            gap: 0,
-            marginBottom: 0,
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0)" : "translateY(20px)",
+            transition: "opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s",
+            marginBottom: 72,
           }}
         >
-          {[BLOCKS[0], BLOCKS[1], BLOCKS[2]].map((block, i) => (
-            <div
-              key={block.id}
-              style={{ display: "flex", alignItems: "stretch", flex: "1 1 0", minWidth: 0 }}
-            >
-              <ArchBlock block={block} index={i} visible={visible} />
-              {i < 2 && <Arrow />}
-            </div>
-          ))}
-        </div>
+          <p
+            style={{
+              textAlign: "center",
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              color: "#4A5180",
+              marginBottom: 16,
+            }}
+          >
+            What your measurement stack tells you about Paid Social — right now
+          </p>
 
-        {/* ── Down-arrow between rows ── */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: "10px 0",
-          }}
-        >
           <div
             style={{
               display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              alignItems: "stretch",
+              justifyContent: "center",
               gap: 0,
+              flexWrap: "wrap",
+              maxWidth: 1000,
+              margin: "0 auto",
             }}
           >
+            {SOURCES.map((s, i) => (
+              <div
+                key={s.source}
+                style={{
+                  display: "flex",
+                  alignItems: "stretch",
+                  animationName: visible ? "conflict-slide" : "none",
+                  animationDuration: "0.5s",
+                  animationDelay: 0.3 + i * 0.08 + "s",
+                  animationFillMode: "both",
+                  animationTimingFunction: "ease",
+                }}
+              >
+                <div
+                  style={{
+                    background: "rgba(255,255,255,0.025)",
+                    border: "1px solid rgba(255,255,255,0.07)",
+                    borderRight: i < SOURCES.length - 1 ? "none" : "1px solid rgba(255,255,255,0.07)",
+                    borderRadius:
+                      i === 0
+                        ? "10px 0 0 10px"
+                        : i === SOURCES.length - 1
+                        ? "0 10px 10px 0"
+                        : "0",
+                    padding: "16px 20px",
+                    minWidth: 160,
+                    textAlign: "center",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: 10,
+                      color: "#4A5180",
+                      fontWeight: 600,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.07em",
+                      marginBottom: 6,
+                    }}
+                  >
+                    {s.source}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 28,
+                      fontWeight: 800,
+                      color: s.color,
+                      lineHeight: 1,
+                      marginBottom: 4,
+                    }}
+                  >
+                    {s.value}
+                  </div>
+                  <div style={{ fontSize: 10, color: "#4A5180", marginBottom: 4 }}>{s.label}</div>
+                  <div
+                    style={{
+                      fontSize: 9.5,
+                      color: "#4A5180",
+                      fontStyle: "italic",
+                    }}
+                  >
+                    {s.note}
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {/* Arrow */}
             <div
               style={{
-                width: 1,
-                height: 36,
-                background:
-                  "linear-gradient(to bottom, rgba(124,58,237,0.5), rgba(6,182,212,0.5))",
+                display: "flex",
+                alignItems: "center",
+                padding: "0 16px",
+                flexShrink: 0,
               }}
-            />
-            <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
-              <path
-                d="M2 2l6 6 6-6"
-                stroke="rgba(124,58,237,0.6)"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-        </div>
-
-        {/* ── Row 2: D → E → F ── */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "stretch",
-            gap: 0,
-          }}
-        >
-          {[BLOCKS[3], BLOCKS[4], BLOCKS[5]].map((block, i) => (
-            <div
-              key={block.id}
-              style={{ display: "flex", alignItems: "stretch", flex: "1 1 0", minWidth: 0 }}
             >
-              <ArchBlock block={block} index={i + 3} visible={visible} />
-              {i < 2 && <Arrow />}
+              <svg width="32" height="16" viewBox="0 0 32 16" fill="none">
+                <path
+                  d="M2 8h26M22 4l6 4-6 4"
+                  stroke="rgba(124,58,237,0.5)"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </div>
-          ))}
-        </div>
 
-        {/* ── Bottom stat bar ── */}
-        <div
-          style={{
-            marginTop: 56,
-            borderRadius: 16,
-            border: "1px solid rgba(255,255,255,0.07)",
-            background: "rgba(255,255,255,0.025)",
-            padding: "28px 40px",
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: 24,
-            opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0)" : "translateY(20px)",
-            transition: "opacity 0.7s ease 0.5s, transform 0.7s ease 0.5s",
-          }}
-        >
-          {[
-            { value: "485", label: "Taxonomy Nodes" },
-            { value: "40+", label: "Data Connectors" },
-            { value: "< 60s", label: "Audit to Insight" },
-            { value: "∞", label: "Scenario Simulations" },
-          ].map((stat) => (
-            <div key={stat.label} style={{ textAlign: "center" }}>
+            {/* LensOS output */}
+            <div
+              style={{
+                background: "rgba(124,58,237,0.08)",
+                border: "1px solid rgba(124,58,237,0.3)",
+                borderRadius: 10,
+                padding: "16px 22px",
+                minWidth: 180,
+                textAlign: "center",
+                alignSelf: "stretch",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                animationName: visible ? "conflict-slide" : "none",
+                animationDuration: "0.5s",
+                animationDelay: "0.72s",
+                animationFillMode: "both",
+                animationTimingFunction: "ease",
+              }}
+            >
               <div
                 style={{
-                  fontSize: "clamp(22px, 3vw, 32px)",
-                  fontWeight: 800,
-                  background:
-                    "linear-gradient(135deg, #E8EEFF 0%, #A78BFA 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                  lineHeight: 1,
+                  fontSize: 10,
+                  color: "#7C3AED",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.07em",
                   marginBottom: 6,
                 }}
               >
-                {stat.value}
+                LensOS Decision
               </div>
               <div
                 style={{
-                  fontSize: 12,
-                  color: "#6B7CB0",
-                  fontWeight: 500,
+                  fontSize: 24,
+                  fontWeight: 800,
+                  color: "#A78BFA",
+                  lineHeight: 1,
+                  marginBottom: 3,
                 }}
               >
-                {stat.label}
+                1.9x iROAS
               </div>
+              <div style={{ fontSize: 10, color: "#6B7CB0", marginBottom: 3 }}>
+                Calibrated [1.4 – 2.4]
+              </div>
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 4,
+                  justifyContent: "center",
+                }}
+              >
+                <span
+                  style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: "50%",
+                    background: "#34D399",
+                    flexShrink: 0,
+                  }}
+                />
+                <span style={{ fontSize: 10, color: "#34D399", fontWeight: 600 }}>
+                  74% confidence
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Orbital decision engine ───────────────────────── */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginBottom: 72,
+            opacity: visible ? 1 : 0,
+            transition: "opacity 0.8s ease 0.4s",
+          }}
+        >
+          <p
+            style={{
+              textAlign: "center",
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              color: "#4A5180",
+              marginBottom: 40,
+            }}
+          >
+            Hover any node to explore the loop
+          </p>
+
+          {/* Orbital container */}
+          <div
+            style={{
+              position: "relative",
+              width: 520,
+              height: 520,
+              maxWidth: "100%",
+            }}
+          >
+            {/* SVG layer: rings + arcs */}
+            <svg
+              viewBox="0 0 520 520"
+              width="520"
+              height="520"
+              style={{ position: "absolute", inset: 0 }}
+              overflow="visible"
+            >
+              {/* Outer decorative ring */}
+              <circle
+                cx="260"
+                cy="260"
+                r="220"
+                fill="none"
+                stroke="rgba(255,255,255,0.03)"
+                strokeWidth="1"
+              />
+
+              {/* Mid decorative ring */}
+              <circle
+                cx="260"
+                cy="260"
+                r="165"
+                fill="none"
+                stroke="rgba(124,58,237,0.06)"
+                strokeWidth="1"
+              />
+
+              {/* Animated orbit ring */}
+              <circle
+                cx="260"
+                cy="260"
+                r="165"
+                fill="none"
+                stroke="rgba(124,58,237,0.3)"
+                strokeWidth="1.5"
+                strokeDasharray="8 14"
+                style={{
+                  animation: "orbit-spin 22s linear infinite",
+                  transformOrigin: "260px 260px",
+                }}
+              />
+
+              {/* Connecting arcs between nodes (subtle) */}
+              {/* N → E */}
+              <path
+                d="M 260 95 A 165 165 0 0 1 425 260"
+                fill="none"
+                stroke="rgba(124,58,237,0.20)"
+                strokeWidth="1.5"
+                strokeDasharray="4 8"
+              />
+              {/* E → S */}
+              <path
+                d="M 425 260 A 165 165 0 0 1 260 425"
+                fill="none"
+                stroke="rgba(79,70,229,0.20)"
+                strokeWidth="1.5"
+                strokeDasharray="4 8"
+              />
+              {/* S → W */}
+              <path
+                d="M 260 425 A 165 165 0 0 1 95 260"
+                fill="none"
+                stroke="rgba(8,145,178,0.20)"
+                strokeWidth="1.5"
+                strokeDasharray="4 8"
+              />
+              {/* W → N */}
+              <path
+                d="M 95 260 A 165 165 0 0 1 260 95"
+                fill="none"
+                stroke="rgba(5,150,105,0.20)"
+                strokeWidth="1.5"
+                strokeDasharray="4 8"
+              />
+
+              {/* Active node highlight arcs */}
+              {activeNode === "measure" && (
+                <>
+                  <path
+                    d="M 260 95 A 165 165 0 0 1 425 260"
+                    fill="none"
+                    stroke="#7C3AED"
+                    strokeWidth="2"
+                    strokeOpacity="0.7"
+                  />
+                  <path
+                    d="M 95 260 A 165 165 0 0 1 260 95"
+                    fill="none"
+                    stroke="#7C3AED"
+                    strokeWidth="2"
+                    strokeOpacity="0.4"
+                  />
+                </>
+              )}
+              {activeNode === "validate" && (
+                <>
+                  <path
+                    d="M 425 260 A 165 165 0 0 1 260 425"
+                    fill="none"
+                    stroke="#4F46E5"
+                    strokeWidth="2"
+                    strokeOpacity="0.7"
+                  />
+                  <path
+                    d="M 260 95 A 165 165 0 0 1 425 260"
+                    fill="none"
+                    stroke="#4F46E5"
+                    strokeWidth="2"
+                    strokeOpacity="0.4"
+                  />
+                </>
+              )}
+              {activeNode === "simulate" && (
+                <>
+                  <path
+                    d="M 260 425 A 165 165 0 0 1 95 260"
+                    fill="none"
+                    stroke="#0891B2"
+                    strokeWidth="2"
+                    strokeOpacity="0.7"
+                  />
+                  <path
+                    d="M 425 260 A 165 165 0 0 1 260 425"
+                    fill="none"
+                    stroke="#0891B2"
+                    strokeWidth="2"
+                    strokeOpacity="0.4"
+                  />
+                </>
+              )}
+              {activeNode === "decide" && (
+                <>
+                  <path
+                    d="M 95 260 A 165 165 0 0 1 260 95"
+                    fill="none"
+                    stroke="#059669"
+                    strokeWidth="2"
+                    strokeOpacity="0.7"
+                  />
+                  <path
+                    d="M 260 425 A 165 165 0 0 1 95 260"
+                    fill="none"
+                    stroke="#059669"
+                    strokeWidth="2"
+                    strokeOpacity="0.4"
+                  />
+                </>
+              )}
+
+              {/* Center pulse rings */}
+              <circle
+                cx="260"
+                cy="260"
+                r="56"
+                fill="rgba(124,58,237,0.06)"
+                stroke="rgba(124,58,237,0.15)"
+                strokeWidth="1"
+                style={{
+                  animation: "center-pulse 3.5s ease-in-out infinite",
+                  transformOrigin: "260px 260px",
+                }}
+              />
+              <circle
+                cx="260"
+                cy="260"
+                r="40"
+                fill="rgba(124,58,237,0.10)"
+                stroke="rgba(124,58,237,0.25)"
+                strokeWidth="1"
+              />
+
+              {/* Node connector dots on orbit ring */}
+              {/* Top (Measure) */}
+              <circle cx="260" cy="95" r="5" fill="#7C3AED" />
+              <circle cx="260" cy="95" r="10" fill="#7C3AED" fillOpacity="0.2" />
+              {/* Right (Validate) */}
+              <circle cx="425" cy="260" r="5" fill="#4F46E5" />
+              <circle cx="425" cy="260" r="10" fill="#4F46E5" fillOpacity="0.2" />
+              {/* Bottom (Simulate) */}
+              <circle cx="260" cy="425" r="5" fill="#0891B2" />
+              <circle cx="260" cy="425" r="10" fill="#0891B2" fillOpacity="0.2" />
+              {/* Left (Decide) */}
+              <circle cx="95" cy="260" r="5" fill="#059669" />
+              <circle cx="95" cy="260" r="10" fill="#059669" fillOpacity="0.2" />
+            </svg>
+
+            {/* Center hub — HTML overlay */}
+            <div
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                textAlign: "center",
+                zIndex: 10,
+                width: 100,
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 10,
+                  fontWeight: 700,
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: "#A78BFA",
+                  marginBottom: 4,
+                }}
+              >
+                LensOS
+              </div>
+              <div
+                style={{
+                  fontSize: 9,
+                  color: "#4A5180",
+                  lineHeight: 1.4,
+                }}
+              >
+                Continuous<br />Decision<br />Intelligence
+              </div>
+            </div>
+
+            {/* Node cards — absolutely positioned HTML */}
+            {/* TOP — Measure */}
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: "50%",
+                transform: "translate(-50%, 0)",
+                width: 148,
+                zIndex: 20,
+                animationName: visible ? "node-entry" : "none",
+                animationDuration: "0.5s",
+                animationDelay: "0.5s",
+                animationFillMode: "both",
+                animationTimingFunction: "ease",
+              }}
+              onMouseEnter={() => setActiveNode("measure")}
+              onMouseLeave={() => setActiveNode(null)}
+            >
+              <NodeCard node={NODES[0]} active={activeNode === "measure"} />
+            </div>
+
+            {/* RIGHT — Validate */}
+            <div
+              style={{
+                position: "absolute",
+                right: 0,
+                top: "50%",
+                transform: "translate(0, -50%)",
+                width: 148,
+                zIndex: 20,
+                animationName: visible ? "node-entry" : "none",
+                animationDuration: "0.5s",
+                animationDelay: "0.6s",
+                animationFillMode: "both",
+                animationTimingFunction: "ease",
+              }}
+              onMouseEnter={() => setActiveNode("validate")}
+              onMouseLeave={() => setActiveNode(null)}
+            >
+              <NodeCard node={NODES[1]} active={activeNode === "validate"} />
+            </div>
+
+            {/* BOTTOM — Simulate */}
+            <div
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: "50%",
+                transform: "translate(-50%, 0)",
+                width: 148,
+                zIndex: 20,
+                animationName: visible ? "node-entry" : "none",
+                animationDuration: "0.5s",
+                animationDelay: "0.7s",
+                animationFillMode: "both",
+                animationTimingFunction: "ease",
+              }}
+              onMouseEnter={() => setActiveNode("simulate")}
+              onMouseLeave={() => setActiveNode(null)}
+            >
+              <NodeCard node={NODES[2]} active={activeNode === "simulate"} />
+            </div>
+
+            {/* LEFT — Decide */}
+            <div
+              style={{
+                position: "absolute",
+                left: 0,
+                top: "50%",
+                transform: "translate(0, -50%)",
+                width: 148,
+                zIndex: 20,
+                animationName: visible ? "node-entry" : "none",
+                animationDuration: "0.5s",
+                animationDelay: "0.8s",
+                animationFillMode: "both",
+                animationTimingFunction: "ease",
+              }}
+              onMouseEnter={() => setActiveNode("decide")}
+              onMouseLeave={() => setActiveNode(null)}
+            >
+              <NodeCard node={NODES[3]} active={activeNode === "decide"} />
+            </div>
+          </div>
+        </div>
+
+        {/* ── Bottom belief row ──────────────────────────────── */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: 1,
+            background: "rgba(255,255,255,0.05)",
+            borderRadius: 16,
+            overflow: "hidden",
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0)" : "translateY(20px)",
+            transition: "opacity 0.7s ease 0.6s, transform 0.7s ease 0.6s",
+          }}
+        >
+          {[
+            {
+              label: "Portfolio-level, not channel-level",
+              body: "LensOS optimizes across your entire media mix simultaneously — not one channel at a time. Every budget shift shows its cross-channel effects before you commit.",
+              accent: "#7C3AED",
+            },
+            {
+              label: "Always-on, not quarterly",
+              body: "The loop runs continuously. New spend data updates the model. New geo tests update the priors. Decisions made today are grounded in evidence from this week, not last quarter.",
+              accent: "#4F46E5",
+            },
+            {
+              label: "Evidence-backed, not gut-backed",
+              body: "Every recommendation carries a confidence interval and the reasoning behind it. When the CMO asks why, the answer isn't 'trust the model' — it's a credible interval and an experiment design.",
+              accent: "#0891B2",
+            },
+          ].map((p, i) => (
+            <div
+              key={p.label}
+              style={{
+                background: "#06060F",
+                padding: "28px 28px 30px",
+                borderLeft: i > 0 ? "1px solid rgba(255,255,255,0.05)" : "none",
+              }}
+            >
+              <div
+                style={{
+                  width: 28,
+                  height: 3,
+                  background: p.accent,
+                  borderRadius: 2,
+                  marginBottom: 14,
+                  opacity: 0.8,
+                }}
+              />
+              <h3
+                style={{
+                  fontSize: 14,
+                  fontWeight: 700,
+                  color: "#E8EEFF",
+                  marginBottom: 10,
+                  lineHeight: 1.4,
+                }}
+              >
+                {p.label}
+              </h3>
+              <p
+                style={{
+                  fontSize: 13,
+                  lineHeight: 1.65,
+                  color: "#6B7CB0",
+                }}
+              >
+                {p.body}
+              </p>
             </div>
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+/* ── Extracted NodeCard to reduce repetition ──────────────────── */
+function NodeCard({
+  node,
+  active,
+}: {
+  node: (typeof NODES)[0];
+  active: boolean;
+}) {
+  return (
+    <div
+      style={{
+        background: active ? "rgba(255,255,255,0.055)" : "rgba(255,255,255,0.025)",
+        border: "1px solid " + (active ? node.color + "70" : "rgba(255,255,255,0.08)"),
+        borderRadius: 12,
+        padding: active ? "13px 13px 15px" : "11px 13px 13px",
+        textAlign: "center",
+        transition: "all 0.22s ease",
+        boxShadow: active ? "0 4px 32px " + node.color + "25" : "none",
+        cursor: "default",
+      }}
+    >
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={node.color}
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        style={{ marginBottom: 6, display: "block", margin: "0 auto 6px" }}
+      >
+        <path d={node.iconPath} />
+      </svg>
+      <div
+        style={{
+          fontSize: 13,
+          fontWeight: 700,
+          color: "#E8EEFF",
+          marginBottom: 2,
+        }}
+      >
+        {node.label}
+      </div>
+      <div style={{ fontSize: 10, color: node.color, fontWeight: 600, marginBottom: active ? 8 : 0 }}>
+        {node.sublabel}
+      </div>
+      {active && (
+        <div style={{ fontSize: 11, color: "#8892B4", lineHeight: 1.55 }}>
+          {node.detail}
+        </div>
+      )}
+    </div>
   );
 }
