@@ -4,10 +4,9 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 const navLinks = [
-  { label: "Platform",         href: "/#lensos" },
-  { label: "Architecture",     href: "/#architecture" },
+  { label: "Platform",         href: "/#capabilities" },
+  { label: "Methodology",      href: "/#solution" },
   { label: "Channel Coverage", href: "/taxonomy" },
-  { label: "Methodology",      href: "/#how-it-works" },
   { label: "Blog",             href: "/blog" },
 ];
 

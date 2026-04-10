@@ -27,7 +27,7 @@ export default function Solution() {
   const ref = useScrollReveal();
 
   return (
-    <section ref={ref as any} className="py-24 lg:py-32" style={{ background: "#06060F" }}>
+    <section id="solution" ref={ref as any} className="py-24 lg:py-32" style={{ background: "#06060F" }}>
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
         <div className="text-center max-w-2xl mx-auto mb-20 reveal-on-scroll">
